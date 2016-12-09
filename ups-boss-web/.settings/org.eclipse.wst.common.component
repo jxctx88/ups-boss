@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="ups-boss-web">
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
+        <wb-resource deploy-path="/" source-path="/src/main/webapp"/>
+        <dependent-module archiveName="ups-boss-common-config-1.0-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/ups-boss-common-config - ${project.version}/ups-boss-common-config - ${project.version}">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="ups-boss-common-util-1.0-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/ups-boss-common-util - ${project.version}/ups-boss-common-util - ${project.version}">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="ups-boss-common-dal-1.0-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/ups-boss-common-dal - ${project.version}/ups-boss-common-dal - ${project.version}">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="ups-boss-service-1.0-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/ups-boss-service - ${project.version}/ups-boss-service - ${project.version}">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <property name="context-root" value="/ups-boss-web"/>
+        <property name="java-output-path" value="/ups-boss-web/src/main/webapp/WEB-INF/classes"/>
+    </wb-module>
+</project-modules>
