@@ -10,7 +10,7 @@ import cn.memedai.ups.boss.service.page.PageParam;
 
 /**
  * 
- * @descript: 权限点表数据访问层接口.
+ * @descript: 权限表数据访问层接口.
  * @author: chengtx
  * @创建时间: 2016-11-27,上午10:55:13
  *
@@ -18,8 +18,8 @@ import cn.memedai.ups.boss.service.page.PageParam;
 public interface PmsActionService{
 
 	/**
-	 * 根据实体ID集字符串获取获取对象列表.
-	 * 
+	 * 根据实体ID集字符串获取获取对象列表.<br/>
+	 * 根据Action的id字符串得到相应的权限列表
 	 * @param ids
 	 * @return
 	 */
@@ -86,5 +86,61 @@ public interface PmsActionService{
 	 * @return
 	 */
 	PageInfo<PmsActionDO> listPage(PageParam pageParam,PmsActionDOExample example);
+
+	/**
+	 * 根据ID删除权限信息
+	 * @param id
+	 */
+	int deleteById(Long id);
 	
+	/**
+	 * 通过ID查询权限，并查询出关联的菜单信息
+	 * @param id
+	 * @return
+	 */
+	PmsActionDO getActionAndMenuById(Long id);
+	
+	/**
+	 * 保存权限功能点
+	 * @param pmsActionDO
+	 * @return
+	 */
+	int saveAction(PmsActionDO pmsActionDO);
+	
+	/**
+	 * 根据主键ID更新权限功能
+	 * @param pmsActionDO
+	 * @return
+	 */
+	int updateAction(PmsActionDO pmsActionDO);
+	
+	/**
+	 * 根据权限ID删除权限并解除权限与角色的关联关系.
+	 * @param actionId
+	 */
+	void deleteActionAndRoleById(Long actionId);
+	
+	/**
+	 * 根据角色ID统计有多少权限关联到此角色.
+	 * 
+	 * @param roleId 
+	 * 			角色ID.
+	 * @return count
+	 */
+	int countActionByRoleId(Long roleId);
+	
+	/**
+	 * 根据角色ID，获取所有的功能权限ID集
+	 * 
+	 * @param roleId
+	 * @return actionIds
+	 */
+	String getActionIdsByRoleId(Long roleId);
+	
+	/**
+	 * 根据角色ID集得到所有权限ID集
+	 * @param roleIds
+	 * @return actionIds
+	 */
+	String getActionIdsByRoleIds(String roleIds);
 }

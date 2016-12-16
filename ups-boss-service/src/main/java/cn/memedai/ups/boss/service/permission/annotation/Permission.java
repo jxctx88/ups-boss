@@ -1,4 +1,4 @@
-package cn.memedai.ups.boss.webapp.annotation;
+package cn.memedai.ups.boss.service.permission.annotation;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;

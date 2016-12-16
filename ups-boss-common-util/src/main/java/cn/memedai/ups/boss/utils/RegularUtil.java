@@ -2,11 +2,12 @@ package cn.memedai.ups.boss.utils;
 
 import java.util.regex.Pattern;
 
+
 /**
  * 正则表达式验证
- * 
- * @author shenjialong
- * 
+ * @author tongxiong.cheng
+ * @date 2016-12-12 下午3:21:51
+ * @version 1.0
  */
 public class RegularUtil {
 

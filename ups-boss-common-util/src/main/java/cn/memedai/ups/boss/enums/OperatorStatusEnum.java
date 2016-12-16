@@ -15,7 +15,10 @@ import java.util.Map;
  */
 public enum OperatorStatusEnum {
 
+	/**100 激活*/
 	ACTIVE("激活", 100),
+	
+	/**101 冻结*/
 	INACTIVE("冻结", 101);
 
 	/** 描述 */

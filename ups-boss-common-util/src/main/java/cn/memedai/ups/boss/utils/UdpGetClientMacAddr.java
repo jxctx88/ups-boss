@@ -7,16 +7,10 @@ import java.net.InetAddress;
 import java.net.SocketTimeoutException;
 
 /**
- * 
- * <ul>
- * <li>Title:客户端Mac地址工具类</li>
- * <li>Description:</li>
- * <li>Copyright: www.gzzyzz.com</li>
- * <li>Company:</li>
- * </ul>
- * 
- * @author Hill
- * @version 2014-7-22
+ * 客户端Mac地址工具类
+ * @author tongxiong.cheng
+ * @date 2016-12-12 下午3:25:53
+ * @version 1.0
  */
 public class UdpGetClientMacAddr {
 

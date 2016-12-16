@@ -7,8 +7,9 @@ import java.util.ResourceBundle;
 
 /**
  * 资源文件工具类
- * @author healy
- *
+ * @author tongxiong.cheng
+ * @date 2016-12-12 下午3:24:28
+ * @version 1.0
  */
 public class ResourceUtils {
 

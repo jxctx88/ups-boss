@@ -15,11 +15,10 @@ import java.util.regex.Pattern;
 import org.apache.commons.lang3.StringUtils;
 
 /**
- * 
- * @描述: 验证工具类.
- * @作者: WuShuicheng .
- * @创建时间: 2013-8-9,上午10:15:34 .
- * @版本: 1.0 .
+ * 验证工具类.
+ * @author tongxiong.cheng
+ * @date 2016-12-12 下午3:26:27
+ * @version 1.0
  */
 public class ValidateUtils {
 	
@@ -107,7 +106,6 @@ public class ValidateUtils {
 	/**
 	 * 验证一个字符串是否完全由纯数字组成的字符串，当字符串为空时也返回false.
 	 * 
-	 * @author WuShuicheng .
 	 * @param str
 	 *            要判断的字符串 .
 	 * @return true or false .
@@ -393,7 +391,7 @@ public class ValidateUtils {
 		return false;
 	}
 
-	private static List<String> generateBankCard(int count) {
+	public static List<String> generateBankCard(int count) {
 		long l = 100000000000000000l;
 		List<String> list = new ArrayList<String>();
 		for (int a = 1; a <= count; a++) {
@@ -417,7 +415,7 @@ public class ValidateUtils {
 		return list;
 	}
 
-	private static List<String> generateIDCard(int count) {
+	public static List<String> generateIDCard(int count) {
 		int a = 100000000;
 		if (count + a > 1000000000) {
 			throw new RuntimeException("数量过大");
@@ -606,7 +604,7 @@ public class ValidateUtils {
 		if (!matcher.matches()) {
 			return false;
 		}
-		Map map = new HashMap();
+		Map<String,String> map = new HashMap<String,String>();
 		for (int i = 0; i < codeNo.length; i++) {
 			map.put(codeNo[i], staVal[i]);
 		}

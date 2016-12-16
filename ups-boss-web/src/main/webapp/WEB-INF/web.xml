@@ -25,6 +25,11 @@
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
     
+    <!-- 在线人数统计 -->
+    <listener>
+      <listener-class>cn.memedai.ups.boss.webapp.listener.OnlineUserListener</listener-class>
+  	</listener>
+    
     <filter>
         <filter-name>encodingFilter</filter-name>
         <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>

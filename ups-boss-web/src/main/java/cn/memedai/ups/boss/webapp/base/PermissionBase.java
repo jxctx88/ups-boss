@@ -8,7 +8,7 @@ import cn.memedai.ups.boss.dal.model.PmsOperatorDO;
 import cn.memedai.ups.boss.enums.OperatorLogStatusEnum;
 import cn.memedai.ups.boss.enums.OperatorLogTypeEnum;
 import cn.memedai.ups.boss.service.context.ThreadLocalContext;
-import cn.memedai.ups.boss.service.permission.biz.PmsOperatorLogBiz;
+import cn.memedai.ups.boss.service.permission.PmsOperatorLogService;
 
 
 /**
@@ -21,7 +21,7 @@ import cn.memedai.ups.boss.service.permission.biz.PmsOperatorLogBiz;
 public class PermissionBase extends ControllerSupport{
 
 	@Autowired
-	private PmsOperatorLogBiz pmsOperatorLogBiz;
+	private PmsOperatorLogService pmsOperatorLogService;
 
 	/**
 	 * 取出当前登录操作员对象
@@ -38,7 +38,7 @@ public class PermissionBase extends ControllerSupport{
 	 * @param content
 	 */
 	protected void logLogin(String content){
-		pmsOperatorLogBiz.createOperatorLog(OperatorLogTypeEnum.LOGIN, OperatorLogStatusEnum.SUCCESS, content, getLoginedOperator(), getIpAddr());
+		pmsOperatorLogService.createOperatorLog(OperatorLogTypeEnum.LOGIN, OperatorLogStatusEnum.SUCCESS, content, getLoginedOperator(), getIpAddr());
 	}
 
 	/**
@@ -47,7 +47,7 @@ public class PermissionBase extends ControllerSupport{
 	 * @param content
 	 */
 	protected void logLoginError(String content, PmsOperatorDO operator){
-		pmsOperatorLogBiz.createOperatorLog(OperatorLogTypeEnum.LOGIN, OperatorLogStatusEnum.ERROR, content, operator, getIpAddr());
+		pmsOperatorLogService.createOperatorLog(OperatorLogTypeEnum.LOGIN, OperatorLogStatusEnum.ERROR, content, operator, getIpAddr());
 	}
 	
 	/**
@@ -56,7 +56,7 @@ public class PermissionBase extends ControllerSupport{
 	 * @param content
 	 */
 	protected void logSave(String content){
-		pmsOperatorLogBiz.createOperatorLog(OperatorLogTypeEnum.ADD, OperatorLogStatusEnum.SUCCESS, content, getLoginedOperator(), getIpAddr());
+		pmsOperatorLogService.createOperatorLog(OperatorLogTypeEnum.ADD, OperatorLogStatusEnum.SUCCESS, content, getLoginedOperator(), getIpAddr());
 	}
 
 	/**
@@ -65,7 +65,7 @@ public class PermissionBase extends ControllerSupport{
 	 * @param content
 	 */
 	protected void logSaveError(String content){
-		pmsOperatorLogBiz.createOperatorLog(OperatorLogTypeEnum.ADD, OperatorLogStatusEnum.ERROR, content, getLoginedOperator(), getIpAddr());
+		pmsOperatorLogService.createOperatorLog(OperatorLogTypeEnum.ADD, OperatorLogStatusEnum.ERROR, content, getLoginedOperator(), getIpAddr());
 	}
 	
 	/**
@@ -74,7 +74,7 @@ public class PermissionBase extends ControllerSupport{
 	 * @param content
 	 */
 	protected void logEdit(String content){
-		pmsOperatorLogBiz.createOperatorLog(OperatorLogTypeEnum.EDIT, OperatorLogStatusEnum.SUCCESS, content, getLoginedOperator(), getIpAddr());
+		pmsOperatorLogService.createOperatorLog(OperatorLogTypeEnum.EDIT, OperatorLogStatusEnum.SUCCESS, content, getLoginedOperator(), getIpAddr());
 	}
 
 	/**
@@ -83,7 +83,7 @@ public class PermissionBase extends ControllerSupport{
 	 * @param content
 	 */
 	protected void logEditError(String content){
-		pmsOperatorLogBiz.createOperatorLog(OperatorLogTypeEnum.EDIT, OperatorLogStatusEnum.ERROR, content, getLoginedOperator(), getIpAddr());
+		pmsOperatorLogService.createOperatorLog(OperatorLogTypeEnum.EDIT, OperatorLogStatusEnum.ERROR, content, getLoginedOperator(), getIpAddr());
 	}
 	
 	/**
@@ -92,7 +92,7 @@ public class PermissionBase extends ControllerSupport{
 	 * @param content
 	 */
 	protected void logDelete(String content){
-		pmsOperatorLogBiz.createOperatorLog(OperatorLogTypeEnum.DELETE, OperatorLogStatusEnum.SUCCESS, content, getLoginedOperator(), getIpAddr());
+		pmsOperatorLogService.createOperatorLog(OperatorLogTypeEnum.DELETE, OperatorLogStatusEnum.SUCCESS, content, getLoginedOperator(), getIpAddr());
 	}
 
 	/**
@@ -101,7 +101,7 @@ public class PermissionBase extends ControllerSupport{
 	 * @param content
 	 */
 	protected void logDeleteError(String content){
-		pmsOperatorLogBiz.createOperatorLog(OperatorLogTypeEnum.DELETE, OperatorLogStatusEnum.ERROR, content, getLoginedOperator(), getIpAddr());
+		pmsOperatorLogService.createOperatorLog(OperatorLogTypeEnum.DELETE, OperatorLogStatusEnum.ERROR, content, getLoginedOperator(), getIpAddr());
 	}
 	
 	/**
@@ -109,7 +109,7 @@ public class PermissionBase extends ControllerSupport{
 	 * @param content
 	 */
 	protected void logQuery(String content) {
-		pmsOperatorLogBiz.createOperatorLog(OperatorLogTypeEnum.QUERYA, OperatorLogStatusEnum.SUCCESS, content, getLoginedOperator(), getIpAddr());
+		pmsOperatorLogService.createOperatorLog(OperatorLogTypeEnum.QUERYA, OperatorLogStatusEnum.SUCCESS, content, getLoginedOperator(), getIpAddr());
 	}
 
 	/**
@@ -117,7 +117,7 @@ public class PermissionBase extends ControllerSupport{
 	 * @param content
 	 */
 	protected void logQueryError(String content) {
-		pmsOperatorLogBiz.createOperatorLog(OperatorLogTypeEnum.QUERYA, OperatorLogStatusEnum.ERROR, content, getLoginedOperator(),getIpAddr());
+		pmsOperatorLogService.createOperatorLog(OperatorLogTypeEnum.QUERYA, OperatorLogStatusEnum.ERROR, content, getLoginedOperator(),getIpAddr());
 	}
 
 }

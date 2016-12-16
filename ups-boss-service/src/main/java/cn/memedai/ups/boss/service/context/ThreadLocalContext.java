@@ -36,10 +36,14 @@ import javax.servlet.http.HttpServletResponse;
  * @version 1.0
  */
 public class ThreadLocalContext {
-
-	// private final static Logger log = Logger.getLogger(ThreadLocalContext.class);
-
+	/**
+	 * HttpRequest的线程副本
+	 */
 	private static ThreadLocal<HttpServletRequest> threadLocalHttpRequest = new ThreadLocal<HttpServletRequest>();
+	
+	/**
+	 * HttpResponse的线程副本
+	 */
 	private static ThreadLocal<HttpServletResponse> threadLocalHttpResponse = new ThreadLocal<HttpServletResponse>();
 
 	public static void setHttpRequest(HttpServletRequest request) {
@@ -47,7 +51,6 @@ public class ThreadLocalContext {
 	}
 
 	public static HttpServletRequest getHttpRequest() {
-		// log.info("=== get threadLocalHttpRequest");
 		return threadLocalHttpRequest.get();
 	}
 
@@ -59,6 +62,11 @@ public class ThreadLocalContext {
 		return threadLocalHttpResponse.get();
 	}
 
+	/**
+	 * 清除线程副本的request,response .<br/>
+	 * 非必须，线程结束后，对应该线程的局部变量将自动被垃圾回收 <br/>
+	 * 显式调用该方法可以加快内存回收的速度
+	 */
 	public static void remove() {
 		threadLocalHttpRequest.remove();
 		threadLocalHttpResponse.remove();

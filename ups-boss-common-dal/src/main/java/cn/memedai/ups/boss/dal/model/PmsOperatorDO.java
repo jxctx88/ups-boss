@@ -14,13 +14,9 @@ import lombok.ToString;
  */
 @Setter
 @Getter
-@ToString
-public class PmsOperatorDO {
-    private Long id;
-
-    private Integer version;
-
-    private Date createtime;
+@ToString(callSuper=true)
+public class PmsOperatorDO  extends BaseEntity{
+   
     /**
      * 登录名
      */

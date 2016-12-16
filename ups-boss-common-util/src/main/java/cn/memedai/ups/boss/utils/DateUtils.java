@@ -11,9 +11,9 @@ import java.util.List;
 
 /**
  * 日期工具类
- * 
- * @author healy
- * 
+ * @author tongxiong.cheng
+ * @date 2016-12-12 下午3:28:32
+ * @version 1.0
  */
 public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 
@@ -1404,7 +1404,7 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 	}
 
 	public static void main(String[] args) {
-		Date date3 = DateUtils.addMinutes(new Date(), 5);
+		//Date date3 = DateUtils.addMinutes(new Date(), 5);
 		System.out.println(new Date().after(DateUtils.addMinute(new Date(), -10)));
 		Date date1 = DateUtils.addMinutes(new Date(), -1);
 		Date date2 = DateUtils.addMinutes(date1, 5);

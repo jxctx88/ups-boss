@@ -10,22 +10,18 @@ import cn.memedai.ups.boss.constants.PermissionConstant;
 import cn.memedai.ups.boss.service.context.ThreadLocalContext;
 
 /**
- * 
- * @描述: 自定义权限权标签 .
- * @作者: WuShuicheng .
- * @创建时间: 2013-7-17,下午4:04:24 .
- * @版本: 1.0 .
+ * 自定义权限权标签 .
+ * @author tongxiong.cheng
+ * @date 2016-12-12 下午3:47:36
+ * @version 1.0
  */
 @SuppressWarnings("serial")
 public class PermissionTaglib extends BodyTagSupport {
 	
-	//private static final Log log = LogFactory.getLog(PermissionTaglib.class);
-
 	private String value; //权限值
 
 	@Override
 	public int doStartTag() throws JspException {
-		//log.info("permission tag value=" + value);
 		if (StringUtils.isNotBlank(value)){
 			@SuppressWarnings("unchecked")
 			final List<String> permissions = (List<String>) ThreadLocalContext.getHttpRequest().getSession().getAttribute(PermissionConstant.ACTIONS_SESSION_KEY);

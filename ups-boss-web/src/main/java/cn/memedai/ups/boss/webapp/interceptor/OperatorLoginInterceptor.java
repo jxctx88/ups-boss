@@ -10,6 +10,7 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
+import cn.memedai.ups.boss.constants.PermissionConstant;
 import cn.memedai.ups.boss.dal.model.PmsOperatorDO;
 
 /**
@@ -28,6 +29,7 @@ public class OperatorLoginInterceptor implements HandlerInterceptor {
 	 * 
 	 * @param context
 	 */
+	@SuppressWarnings("unchecked")
 	private void setToGoUrl(HttpServletRequest request) {
 		String action = request.getServletPath();
 		String para = "?";
@@ -51,18 +53,13 @@ public class OperatorLoginInterceptor implements HandlerInterceptor {
 
 	}
 
-	/**
-	 * 登录操作员的session键名.
-	 */
-	private static final String OPERATOR_SESSION_KEY = "pmsOperator";
-	
 	@Override
 	public boolean preHandle(HttpServletRequest request,
 			HttpServletResponse response, Object obj)
 			throws Exception {
 		
 		//登录操作员的session键名.
-		PmsOperatorDO operator = (PmsOperatorDO)request.getSession().getAttribute(OPERATOR_SESSION_KEY);
+		PmsOperatorDO operator = (PmsOperatorDO)request.getSession().getAttribute(PermissionConstant.OPERATOR_SESSION_KEY);
 		
 		// 判断用户是否已登录
 		if (operator == null) {

@@ -9,7 +9,7 @@ import org.aopalliance.intercept.MethodInvocation;
 
 import cn.memedai.ups.boss.constants.PermissionConstant;
 import cn.memedai.ups.boss.service.context.ThreadLocalContext;
-import cn.memedai.ups.boss.webapp.annotation.Permission;
+import cn.memedai.ups.boss.service.permission.annotation.Permission;
 
 /**
  * 

@@ -10,14 +10,15 @@ import cn.memedai.ups.boss.service.page.PageBean;
 
 /**
  * ClassName: PageTag <br/>
- * Function: 分页标签<br/>
- * date: 2013-11-13 上午12:05:36 <br/>
- * 
- * @author laich
+ * 分页标签 <br/>
+ * @author tongxiong.cheng
+ * @date 2016-12-12 下午3:47:08
+ * @version 1.0
  */
 public class PageTag extends TagSupport {
 
 	private static final long serialVersionUID = 1L;
+	
 	private PageBean pageBean;
 	private String url; // URL
 	private Integer currentPage;// 当前页数

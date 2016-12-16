@@ -6,12 +6,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 
- * @描述: 管理系统权限模块异常.
- * @作者: WuShuicheng.
- * @创建: 2014-8-13,下午5:01:40
- * @版本: V1.0
- * 
+ * 管理系统权限模块异常.
+ * @author tongxiong.cheng
+ * @date 2016-12-16 下午3:46:09
+ * @version 1.0
  */
 public class PermissionException extends Exception {
 	/**

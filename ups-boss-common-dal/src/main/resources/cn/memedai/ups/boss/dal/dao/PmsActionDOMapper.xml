@@ -240,4 +240,12 @@
       MENUID = #{menuid,jdbcType=BIGINT}
     where ID = #{id,jdbcType=BIGINT}
   </update>
+  
+  <!--  根据条件查询，包含菜单名称 -->
+  <select id="listByExample" resultMap="BaseResultMap" parameterType="cn.memedai.ups.boss.dal.model.PmsActionDOExample" >
+    select ID, VERSION, CREATETIME, ACTIONNAME, ACTION, REMARK, MENUID,NAME
+    from tbl_boss_pms_action a
+    LEFT JOIN tbl_boss_pms_menu b on a.MENUID=b.id
+   
+  </select>
 </mapper>

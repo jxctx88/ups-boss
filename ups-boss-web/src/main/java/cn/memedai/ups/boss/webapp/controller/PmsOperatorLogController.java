@@ -15,19 +15,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.github.pagehelper.PageInfo;
-
 import cn.memedai.ups.boss.dal.model.PmsOperatorDO;
 import cn.memedai.ups.boss.dal.model.PmsOperatorLogDO;
 import cn.memedai.ups.boss.dal.model.PmsOperatorLogDOExample;
 import cn.memedai.ups.boss.dal.model.PmsOperatorLogDOExample.Criteria;
 import cn.memedai.ups.boss.enums.OperatorLogStatusEnum;
 import cn.memedai.ups.boss.enums.OperatorLogTypeEnum;
-import cn.memedai.ups.boss.service.permission.biz.PmsOperatorBiz;
-import cn.memedai.ups.boss.service.permission.biz.PmsOperatorLogBiz;
+import cn.memedai.ups.boss.service.permission.PmsOperatorLogService;
+import cn.memedai.ups.boss.service.permission.PmsOperatorService;
+import cn.memedai.ups.boss.service.permission.annotation.Permission;
 import cn.memedai.ups.boss.utils.DateUtils;
-import cn.memedai.ups.boss.webapp.annotation.Permission;
 import cn.memedai.ups.boss.webapp.base.PermissionBase;
+
+import com.github.pagehelper.PageInfo;
 
 
 /**
@@ -42,10 +42,10 @@ import cn.memedai.ups.boss.webapp.base.PermissionBase;
 public class PmsOperatorLogController extends PermissionBase {
 
 	@Autowired
-	private PmsOperatorBiz pmsOperatorBiz;
+	PmsOperatorService pmsOperatorService;
 	
 	@Autowired
-	private PmsOperatorLogBiz pmsOperatorLogBiz;
+	private PmsOperatorLogService pmsOperatorLogService;
 
 	/**
 	 * 进入操作员操作日志信息查询页面.
@@ -134,7 +134,7 @@ public class PmsOperatorLogController extends PermissionBase {
 			//super.pushData(pageBean);
 			
 			example.setOrderByClause("id desc");
-			PageInfo<PmsOperatorLogDO> pageInfo = pmsOperatorLogBiz.listPage(getPageParam(), example);
+			PageInfo<PmsOperatorLogDO> pageInfo = pmsOperatorLogService.listPage(getPageParam(), example);
 			//super.pushData(paramMap); // 回显查询条件值
 			// 日志状态
 			//super.putData("OperatorLogStatusEnum", OperatorLogStatusEnum.toMap());
@@ -166,8 +166,8 @@ public class PmsOperatorLogController extends PermissionBase {
 	@RequestMapping("/viewById")
 	public Object viewById() {
 		ModelAndView model = new ModelAndView("/pms/PmsOperatorLogView");
-		PmsOperatorLogDO operatorLog = pmsOperatorLogBiz.getById(Long.parseLong(getString("id")));
-		PmsOperatorDO operator = pmsOperatorBiz.getById(operatorLog.getOperatorid());
+		PmsOperatorLogDO operatorLog = pmsOperatorLogService.getById(Long.parseLong(getString("id")));
+		PmsOperatorDO operator = pmsOperatorService.getById(operatorLog.getOperatorid());
 		//super.putData("operator", operator);
 		//super.putData("operatorLog", operatorLog);
 		// 日志状态

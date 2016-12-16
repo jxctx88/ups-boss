@@ -33,12 +33,12 @@ import cn.memedai.ups.boss.dal.model.PmsRoleOperatorDO;
 import cn.memedai.ups.boss.enums.OperatorStatusEnum;
 import cn.memedai.ups.boss.enums.OperatorTypeEnum;
 import cn.memedai.ups.boss.enums.RoleTypeEnum;
-import cn.memedai.ups.boss.service.permission.biz.PmsActionBiz;
-import cn.memedai.ups.boss.service.permission.biz.PmsMenuBiz;
-import cn.memedai.ups.boss.service.permission.biz.PmsOperatorBiz;
-import cn.memedai.ups.boss.service.permission.biz.PmsRoleBiz;
+import cn.memedai.ups.boss.service.permission.PmsActionService;
+import cn.memedai.ups.boss.service.permission.PmsMenuService;
+import cn.memedai.ups.boss.service.permission.PmsOperatorService;
+import cn.memedai.ups.boss.service.permission.PmsRoleService;
+import cn.memedai.ups.boss.service.permission.annotation.Permission;
 import cn.memedai.ups.boss.utils.ValidateUtils;
-import cn.memedai.ups.boss.webapp.annotation.Permission;
 import cn.memedai.ups.boss.webapp.base.PermissionBase;
 
 import com.github.pagehelper.PageInfo;
@@ -55,13 +55,16 @@ import com.github.pagehelper.PageInfo;
 public class PmsPermissionController extends PermissionBase {
 
 	@Autowired
-	private PmsActionBiz pmsActionBiz;
+	private PmsActionService pmsActionService;
+	
 	@Autowired
-	private PmsRoleBiz pmsRoleBiz;
+	private PmsRoleService pmsRoleService;
+	
 	@Autowired
-	private PmsOperatorBiz pmsOperatorBiz;
+	private PmsOperatorService pmsOperatorService;
+	
 	@Autowired
-	private PmsMenuBiz pmsMenuBiz;
+	private PmsMenuService pmsMenuService;
 
 	// //////////////////////////////////// 权限点管理
 	// ///////////////////////////////////
@@ -94,7 +97,7 @@ public class PmsPermissionController extends PermissionBase {
 				criteria.andActionEqualTo(action);
 			}
 			
-			PageInfo<PmsActionDO> pageInfo = pmsActionBiz.listPage(getPageParam(), example);
+			PageInfo<PmsActionDO> pageInfo = pmsActionService.listPage(getPageParam(), example);
 			//super.pushData(pageBean);
 			//super.pushData(paramMap); // 回显查询条件值
 			model.addObject("paramMap", paramMap);
@@ -150,17 +153,17 @@ public class PmsPermissionController extends PermissionBase {
 				return operateError(validateMsg); // 返回错误信息
 			}
 			// 检查权限名称是否已存在
-			PmsActionDO checkName = pmsActionBiz.getByActionName(actionName.trim());
+			PmsActionDO checkName = pmsActionService.getByActionName(actionName.trim());
 			if (checkName != null) {
 				return operateError("权限名称【" + actionName + "】已存在");
 			}
 			// 检查权限是否已存在
-			PmsActionDO checkAction = pmsActionBiz.getByAction(action.trim());
+			PmsActionDO checkAction = pmsActionService.getByAction(action.trim());
 			if (checkAction != null) {
 				return operateError("权限【" + action + "】已存在");
 			}
 
-			pmsActionBiz.saveAction(act);
+			pmsActionService.saveAction(act);
 
 			super.logSave("添加权限[" + actionName + "," + action + "]");
 
@@ -180,7 +183,7 @@ public class PmsPermissionController extends PermissionBase {
 	public Object pmsMenuLookUpUI() {
 		ModelAndView mov = new ModelAndView("/pms/PmsMenuLookUp");
 		//putData("tree", pmsMenuBiz.buildLookUpMenu());
-		mov.addObject("tree", pmsMenuBiz.buildLookUpMenu());
+		mov.addObject("tree", pmsMenuService.buildLookUpMenu());
 		return mov;
 	}
 
@@ -204,7 +207,7 @@ public class PmsPermissionController extends PermissionBase {
 		msg += lengthValidate("描述", desc, true, 3, 60);
 		// 校验菜单ID是否存在
 		if (null != pmsAction.getMenu().getId()) {
-			PmsMenuDO menu = pmsMenuBiz.getById(pmsAction.getMenu().getId());
+			PmsMenuDO menu = pmsMenuService.getById(pmsAction.getMenu().getId());
 			if (menu == null) {
 				msg += "，请选择权限关联的菜单";
 			}
@@ -226,7 +229,7 @@ public class PmsPermissionController extends PermissionBase {
 		ModelAndView mov = new ModelAndView("/pms/PmsActionEdit");
 		try {
 			Long id = getLong("id");
-			PmsActionDO pmsActionDO = pmsActionBiz.getById(id);
+			PmsActionDO pmsActionDO = pmsActionService.getActionAndMenuById(id);
 			//super.putData("pmsAction", pmsAction);
 			mov.addObject("pmsActionDO", pmsActionDO);
 			return mov;
@@ -247,7 +250,7 @@ public class PmsPermissionController extends PermissionBase {
 	public Object editPmsAction(HttpServletRequest request) {
 		try {
 			Long id = getLong("actionId");
-			PmsActionDO pmsAction = pmsActionBiz.getById(id);
+			PmsActionDO pmsAction = pmsActionService.getActionAndMenuById(id);
 			if (pmsAction == null) {
 				return operateError("无法获取要修改的数据");
 			} else {
@@ -267,7 +270,7 @@ public class PmsPermissionController extends PermissionBase {
 				}
 
 				// 检查权限名称是否已存在
-				PmsActionDO checkName = pmsActionBiz.getByActionNameNotEqId(actionName, id);
+				PmsActionDO checkName = pmsActionService.getByActionNameNotEqId(actionName, id);
 				if (checkName != null) {
 					return operateError("权限名称【" + actionName + "】已存在");
 				}
@@ -278,7 +281,7 @@ public class PmsPermissionController extends PermissionBase {
 				// return operateError("权限【"+action+"】已存在");
 				// }
 
-				pmsActionBiz.updateAction(pmsAction);
+				pmsActionService.updateAction(pmsAction);
 
 				super.logEdit("修改权限[" + actionName + "],[" + pmsAction.getAction() + "]");
 
@@ -301,16 +304,16 @@ public class PmsPermissionController extends PermissionBase {
 	public Object deletePmsAction(HttpServletRequest request) {
 		try {
 			Long actionId = getLong("id");
-			PmsActionDO act = pmsActionBiz.getById(actionId);
+			PmsActionDO act = pmsActionService.getActionAndMenuById(actionId);
 			if (act == null) {
 				return operateError("无法获取要删除的数据");
 			}
 			// 判断此权限是否关联有角色，要先解除与角色的关联后才能删除该权限
-			List<PmsRoleDO> roleList = pmsRoleBiz.listByActionId(actionId);
+			List<PmsRoleDO> roleList = pmsRoleService.listByActionId(actionId);
 			if (roleList != null && !roleList.isEmpty()) {
 				return operateError("权限【" + act.getAction() + "】关联了【" + roleList.size() + "】个角色，要解除所有关联后才能删除。其中一个角色名为:" + roleList.get(0).getRolename());
 			}
-			pmsActionBiz.deleteActionById(actionId);
+			pmsActionService.deleteActionAndRoleById(actionId);
 			super.logDelete("删除权限[" + act.getActionname() + "],[" + act.getAction() + "]");
 			return operateSuccess(); // 返回operateSuccess视图,并提示“操作成功”
 		} catch (Exception e) {
@@ -343,7 +346,7 @@ public class PmsPermissionController extends PermissionBase {
 			}
 			example.setOrderByClause(" id desc");
 			//super.pageBean = pmsRoleBiz.listPage(getPageParam(), paramMap);
-			PageInfo<PmsRoleDO> pageInfo = pmsRoleBiz.listPage(getPageParam(), example);
+			PageInfo<PmsRoleDO> pageInfo = pmsRoleService.listPage(getPageParam(), example);
 			PmsOperatorDO operator = this.getLoginedOperator();
 			//super.pushData(operator);
 			//super.pushData(pageBean);
@@ -391,7 +394,7 @@ public class PmsPermissionController extends PermissionBase {
 	public Object addPmsRole() {
 		try {
 			String roleName = getString("roleName");
-			PmsRoleDO roleCheck = pmsRoleBiz.getByRoleName(roleName);
+			PmsRoleDO roleCheck = pmsRoleService.getByRoleName(roleName);
 			if (roleCheck != null) {
 				return operateError("角色名【" + roleName + "】已存在");
 			}
@@ -410,7 +413,7 @@ public class PmsPermissionController extends PermissionBase {
 				return operateError(validateMsg); // 返回错误信息
 			}
 
-			pmsRoleBiz.saveRole(pmsRole);
+			pmsRoleService.create(pmsRole);
 
 			// 记录操作员操作日志
 			super.logSave("添加角色信息，角色名称[" + pmsRole.getRolename() + "]");
@@ -452,7 +455,7 @@ public class PmsPermissionController extends PermissionBase {
 		try {
 			
 			Long roleId = getLong("roleId");
-			PmsRoleDO pmsRole = pmsRoleBiz.getById(roleId);
+			PmsRoleDO pmsRole = pmsRoleService.getById(roleId);
 			if (pmsRole == null) {
 				return operateError("获取数据失败");
 			}
@@ -484,7 +487,7 @@ public class PmsPermissionController extends PermissionBase {
 		try {
 			Long id = getLong("id");
 
-			PmsRoleDO pmsRole = pmsRoleBiz.getById(id);
+			PmsRoleDO pmsRole = pmsRoleService.getById(id);
 			if (pmsRole == null) {
 				return operateError("无法获取要修改的数据");
 			}
@@ -496,7 +499,7 @@ public class PmsPermissionController extends PermissionBase {
 			}
 
 			String roleName = getString("roleName");
-			PmsRoleDO roleCheck = pmsRoleBiz.findByRoleNameNotEqId(id, roleName);
+			PmsRoleDO roleCheck = pmsRoleService.findByRoleNameNotEqId(id, roleName);
 			if (roleCheck != null) {
 				return operateError("角色名【" + roleName + "】已存在");
 			}
@@ -510,7 +513,7 @@ public class PmsPermissionController extends PermissionBase {
 				return operateError(validateMsg); // 返回错误信息
 			}
 
-			pmsRoleBiz.updateRole(pmsRole);
+			pmsRoleService.update(pmsRole);
 
 			super.logEdit("修改角色[" + pmsRole.getRolename() + "]");
 
@@ -533,7 +536,7 @@ public class PmsPermissionController extends PermissionBase {
 		try {
 			Long roleId = getLong("roleId");
 
-			PmsRoleDO role = pmsRoleBiz.getById(roleId);
+			PmsRoleDO role = pmsRoleService.getById(roleId);
 			if (role == null) {
 				return operateError("无法获取要删除的角色");
 			}
@@ -543,7 +546,7 @@ public class PmsPermissionController extends PermissionBase {
 
 			String msg = "";
 			// 判断是否有操作员关联到此角色
-			int operatorCount = pmsOperatorBiz.countOperatorByRoleId(roleId);
+			int operatorCount = pmsOperatorService.countOperatorByRoleId(roleId);
 			if (operatorCount > 0) {
 				msg += "【" + operatorCount + "】个操作员";
 			}
@@ -563,7 +566,7 @@ public class PmsPermissionController extends PermissionBase {
 				return operateError("有" + msg);
 			}
 
-			pmsRoleBiz.deleteRoleById(roleId);
+			pmsRoleService.deleteRoleById(roleId);
 			super.logDelete("删除角色，名称:" + role.getRolename());
 			return operateSuccess();
 		} catch (Exception e) {
@@ -585,7 +588,7 @@ public class PmsPermissionController extends PermissionBase {
 		ModelAndView mov = new ModelAndView("/pms/assignPermissionUI");
 		Long roleId = getLong("roleId");
 
-		PmsRoleDO role = pmsRoleBiz.getById(roleId);
+		PmsRoleDO role = pmsRoleService.getById(roleId);
 		if (role == null) {
 			return operateError("无法获取角色信息");
 		}
@@ -598,8 +601,8 @@ public class PmsPermissionController extends PermissionBase {
 		String menuIds = "";
 		String actionIds = "";
 		try {
-			menuIds = pmsMenuBiz.getMenuIdsByRoleId(roleId); // 根据角色查找角色对应的菜单ID集
-			actionIds = pmsActionBiz.getActionIdsByRoleId(roleId); // 根据角色查找角色对应的功能权限ID集
+			menuIds = pmsMenuService.getMenuIdsByRoleId(roleId); // 根据角色查找角色对应的菜单ID集
+			actionIds = pmsActionService.getActionIdsByRoleId(roleId); // 根据角色查找角色对应的功能权限ID集
 		} catch (Exception e) {
 			log.error("根据角色ID，找不到对应的菜单、权限", e);
 		}
@@ -609,9 +612,9 @@ public class PmsPermissionController extends PermissionBase {
 		actionIds = "," + actionIds;
 
 		//super.putData("menuActionTree", pmsMenuBiz.buildMenuActionTree(menuIds, actionIds));
-		mov.addObject("menuActionTree", pmsMenuBiz.buildMenuActionTree(menuIds, actionIds));
+		mov.addObject("menuActionTree", pmsMenuService.buildMenuActionTree(menuIds, actionIds));
 		// 查询角色对应的用户
-		List<PmsOperatorDO> userList = (List<PmsOperatorDO>) pmsOperatorBiz.listOperatorByRoleId(roleId);
+		List<PmsOperatorDO> userList = (List<PmsOperatorDO>) pmsOperatorService.listByRoleId(roleId);
 		//super.putData("userList", userList);
 		mov.addObject("userList", userList);
 		//super.putData("roleId", roleId);
@@ -629,7 +632,7 @@ public class PmsPermissionController extends PermissionBase {
 
 			Long roleId = getLong("roleId");
 
-			PmsRoleDO role = pmsRoleBiz.getById(roleId);
+			PmsRoleDO role = pmsRoleService.getById(roleId);
 			if (role == null) {
 				getOutputMsg().put("MSG", "无法获取角色信息");
 				return;
@@ -655,7 +658,7 @@ public class PmsPermissionController extends PermissionBase {
 				actionIds = actionIds.replaceAll("undefined,", "");
 			}
 			// 分配菜单权限，功能权限
-			pmsMenuBiz.assignPermission(roleId, menuIds, actionIds);
+			pmsMenuService.assignPermission(roleId, menuIds, actionIds);
 
 			// String menuNameBuffer = theMenusIdsChangeNames(menuIds); // 查询菜单的
 
@@ -686,12 +689,12 @@ public class PmsPermissionController extends PermissionBase {
 		StringBuffer actionBuffer = new StringBuffer();
 		int actionNum = actionIds.indexOf(",");
 		if (actionNum <= 0) {
-			PmsActionDO action = pmsActionBiz.getById(Long.valueOf(actionIds));
+			PmsActionDO action = pmsActionService.getActionAndMenuById(Long.valueOf(actionIds));
 			actionBuffer.append(action.getActionname());
 		} else {
 			String[] actionArray = actionIds.split(",");
 			for (int i = 0; i < actionArray.length; i++) {
-				PmsActionDO action = pmsActionBiz.getById(Long.valueOf(actionArray[i]));
+				PmsActionDO action = pmsActionService.getActionAndMenuById(Long.valueOf(actionArray[i]));
 				if (i == actionArray.length - 1) {
 					actionBuffer.append(action.getActionname());
 				} else {
@@ -714,12 +717,12 @@ public class PmsPermissionController extends PermissionBase {
 		StringBuffer menuBuffer = new StringBuffer(); // 追加菜单的名称
 		int menuNum = menuIds.indexOf(",");
 		if (menuNum <= 0) {
-			PmsMenuDO menu = pmsMenuBiz.getById(Long.valueOf(menuIds));
+			PmsMenuDO menu = pmsMenuService.getById(Long.valueOf(menuIds));
 			menuBuffer.append(menu.getName());
 		} else {
 			String[] menuArray = menuIds.split(",");
 			for (int i = 0; i < menuArray.length; i++) {
-				PmsMenuDO menu = pmsMenuBiz.getById(Long.valueOf(menuArray[i]));
+				PmsMenuDO menu = pmsMenuService.getById(Long.valueOf(menuArray[i]));
 				if (i == menuArray.length - 1) {
 					menuBuffer.append(menu.getName());
 				} else {
@@ -769,11 +772,11 @@ public class PmsPermissionController extends PermissionBase {
 			}
 			example.setOrderByClause("id desc");
 			
-			PageInfo<PmsOperatorDO> pageInfo = pmsOperatorBiz.listPage(getPageParam(), example);
+			PageInfo<PmsOperatorDO> pageInfo = pmsOperatorService.listPage(getPageParam(), example);
 			
 			//super.pageBean = pmsOperatorBiz.listPage(getPageParam(), paramMap);
 			//super.pushData(pageBean);
-			PmsOperatorDO pmsOperator = getLoginedOperator();// 获取当前登录操作员对象
+			//PmsOperatorDO pmsOperator = getLoginedOperator();// 获取当前登录操作员对象
 			//super.putData("currLoginName", pmsOperator.getLoginname());
 			// 回显查询条件值
 			//super.pushData(paramMap);
@@ -808,7 +811,7 @@ public class PmsPermissionController extends PermissionBase {
 		try {
 			ModelAndView mov = new ModelAndView("/pms/PmsOperatorView");
 			String operatorId = getString("id");
-			PmsOperatorDO pmsOperator = pmsOperatorBiz.getById(Long.parseLong(operatorId));
+			PmsOperatorDO pmsOperator = pmsOperatorService.getById(Long.parseLong(operatorId));
 			if (pmsOperator == null) {
 				return operateError("无法获取要查看的数据");
 			}
@@ -822,10 +825,10 @@ public class PmsPermissionController extends PermissionBase {
 			//super.pushData(pmsOperator);
 			// 准备角色列表
 			//super.putData("rolesList", pmsRoleBiz.listAllRole());
-			mov.addObject("rolesList", pmsRoleBiz.listAllRole());
+			mov.addObject("rolesList", pmsRoleService.listAll());
 			
 			// 准备该用户拥有的角色ID字符串
-			List<PmsRoleOperatorDO> lisPmsRoleOperators = pmsOperatorBiz.listRoleOperatorByOperatorId(Long.parseLong(operatorId));
+			List<PmsRoleOperatorDO> lisPmsRoleOperators = pmsOperatorService.listRoleOperatorByOperatorId(Long.parseLong(operatorId));
 			StringBuffer owenedRoleIdBuffer = new StringBuffer("");
 			for (PmsRoleOperatorDO pmsRoleOperator : lisPmsRoleOperators) {
 				owenedRoleIdBuffer.append(pmsRoleOperator.getRoleid());
@@ -858,7 +861,7 @@ public class PmsPermissionController extends PermissionBase {
 			/*super.putData("rolesList", pmsRoleBiz.listAllRole());
 			super.putData("OperatorStatusEnumList", OperatorStatusEnum.values());
 			super.putData("RoleTypeEnum", RoleTypeEnum.toMap());*/
-			mov.addObject("rolesList", pmsRoleBiz.listAllRole());
+			mov.addObject("rolesList", pmsRoleService.listAll());
 			mov.addObject("OperatorStatusEnumList", OperatorStatusEnum.values());
 			mov.addObject("RoleTypeEnum", RoleTypeEnum.toMap());
 			return mov;
@@ -907,14 +910,14 @@ public class PmsPermissionController extends PermissionBase {
 			}
 
 			// 校验操作员登录名是否已存在
-			PmsOperatorDO loginNameCheck = pmsOperatorBiz.findOperatorByLoginName(loginName);
+			PmsOperatorDO loginNameCheck = pmsOperatorService.findByLoginName(loginName);
 			if (loginNameCheck != null) {
 				return operateError("登录名【" + loginName + "】已存在");
 			}
 
 			pmsOperator.setLoginpwd(DigestUtils.sha1Hex(loginPwd)); // 存存前对密码进行加密
 
-			pmsOperatorBiz.saveOperator(pmsOperator, roleOperatorStr);
+			pmsOperatorService.saveOperator(pmsOperator, roleOperatorStr);
 
 			String roleNames = theRolesChangeNames(roleOperatorStr);
 
@@ -939,12 +942,12 @@ public class PmsPermissionController extends PermissionBase {
 		StringBuffer menuBuffer = new StringBuffer(); // 追加菜单的名称
 		int roleNum = roleOperatorStr.indexOf(",");
 		if (roleNum <= 0) {
-			PmsRoleDO role = pmsRoleBiz.getById(Long.valueOf(roleOperatorStr));
+			PmsRoleDO role = pmsRoleService.getById(Long.valueOf(roleOperatorStr));
 			menuBuffer.append(role.getRolename());
 		} else {
 			String[] roleArray = roleOperatorStr.split(",");
 			for (int i = 0; i < roleArray.length; i++) {
-				PmsRoleDO role = pmsRoleBiz.getById(Long.valueOf(roleArray[i]));
+				PmsRoleDO role = pmsRoleService.getById(Long.valueOf(roleArray[i]));
 				if (i == roleArray.length - 1) {
 					menuBuffer.append(role.getRolename());
 				} else {
@@ -1060,8 +1063,8 @@ public class PmsPermissionController extends PermissionBase {
 	@ResponseBody
 	public Object deleteOperatorStatus() {
 		long id = getLong("id");
-		PmsOperatorDO pmsOperator = pmsOperatorBiz.getById(id); // 查询操作员信息
-		pmsOperatorBiz.deleteOperatorById(id);
+		PmsOperatorDO pmsOperator = pmsOperatorService.getById(id); // 查询操作员信息
+		pmsOperatorService.deleteOperatorById(id);
 		super.logDelete("删除操作员.操作员登录名[" + pmsOperator.getLoginname() + "]");
 		return this.operateSuccess("操作成功");
 	}
@@ -1078,7 +1081,7 @@ public class PmsPermissionController extends PermissionBase {
 		try {
 			ModelAndView mov = new ModelAndView("/pms/PmsOperatorEdit");
 			Long id = getLong("id");
-			PmsOperatorDO pmsOperator = pmsOperatorBiz.getById(id);
+			PmsOperatorDO pmsOperator = pmsOperatorService.getById(id);
 			if (pmsOperator == null) {
 				return operateError("无法获取要修改的数据");
 			}
@@ -1093,9 +1096,9 @@ public class PmsPermissionController extends PermissionBase {
 			mov.addObject("pmsOperator", pmsOperator);
 			// 准备角色列表
 			//super.putData("rolesList", pmsRoleBiz.listAllRole());
-			mov.addObject("rolesList", pmsRoleBiz.listAllRole());
+			mov.addObject("rolesList", pmsRoleService.listAll());
 			// 准备该用户拥有的角色ID字符串
-			List<PmsRoleOperatorDO> lisPmsRoleOperators = pmsOperatorBiz.listRoleOperatorByOperatorId(id);
+			List<PmsRoleOperatorDO> lisPmsRoleOperators = pmsOperatorService.listRoleOperatorByOperatorId(id);
 			StringBuffer owenedRoleIdBuffer = new StringBuffer("");
 			for (PmsRoleOperatorDO pmsRoleOperator : lisPmsRoleOperators) {
 				owenedRoleIdBuffer.append(pmsRoleOperator.getRoleid());
@@ -1134,7 +1137,7 @@ public class PmsPermissionController extends PermissionBase {
 		try {
 			Long id = getLong("id");
 
-			PmsOperatorDO pmsOperator = pmsOperatorBiz.getById(id);
+			PmsOperatorDO pmsOperator = pmsOperatorService.getById(id);
 			if (pmsOperator == null) {
 				return operateError("无法获取要修改的操作员信息");
 			}
@@ -1154,14 +1157,14 @@ public class PmsPermissionController extends PermissionBase {
 			String newStr = "";
 			StringBuffer oldRoleNameBuffer = new StringBuffer();
 			// 查询操作员原有的角色
-			List<PmsRoleOperatorDO> list = pmsOperatorBiz.listRoleOperatorByOperatorId(id);
+			List<PmsRoleOperatorDO> list = pmsOperatorService.listRoleOperatorByOperatorId(id);
 			for (PmsRoleOperatorDO ro : list) {
 				if (newStr == null || "".equals(newStr) ) {
 					newStr += ro.getRoleid();
 				} else {
 					newStr += "," + ro.getRoleid();
 				}
-				PmsRoleDO role = pmsRoleBiz.getById(ro.getRoleid());
+				PmsRoleDO role = pmsRoleService.getById(ro.getRoleid());
 				oldRoleNameBuffer.append(role.getRolename()).append(",");
 			}
 
@@ -1179,7 +1182,7 @@ public class PmsPermissionController extends PermissionBase {
 				return operateError(validateMsg); // 返回错误信息
 			}
 
-			pmsOperatorBiz.updateOperator(pmsOperator, roleOperatorStr);
+			pmsOperatorService.updateOperator(pmsOperator, roleOperatorStr);
 			super.logEdit("修改操作员[" + pmsOperator.getLoginname() + "]，更改前角色[" + oldRoleNameBuffer + "]，更改后角色[" + newRoleNames + "]");
 			return operateSuccess();
 		} catch (Exception e) {
@@ -1199,7 +1202,7 @@ public class PmsPermissionController extends PermissionBase {
 	public Object changeOperatorStatus() {
 		try {
 			Long operatorId = getLong("id");
-			PmsOperatorDO operator = pmsOperatorBiz.getById(operatorId);
+			PmsOperatorDO operator = pmsOperatorService.getById(operatorId);
 			if (operator == null) {
 				return operateError("无法获取要操作的数据");
 			}
@@ -1221,12 +1224,12 @@ public class PmsPermissionController extends PermissionBase {
 					return operateError("【" + operator.getLoginname() + "】为超级管理员，不能冻结");
 				}
 				operator.setStatus(OperatorStatusEnum.INACTIVE.getValue()+"");
-				pmsOperatorBiz.update(operator);
+				pmsOperatorService.update(operator);
 				super.logEdit("冻结操作员[" + operator.getLoginname() + "]");
 			} else {
 				operator.setStatus(OperatorStatusEnum.ACTIVE.getValue()+"");
 				operator.setPwderrorcount((short)0);
-				pmsOperatorBiz.update(operator);
+				pmsOperatorService.update(operator);
 				super.logEdit("激活操作员[" + operator.getLoginname() + "]");
 			}
 			return operateSuccess();
@@ -1246,7 +1249,7 @@ public class PmsPermissionController extends PermissionBase {
 	@ResponseBody
 	public Object resetOperatorPwdUI() {
 		ModelAndView mov = new ModelAndView("/pms/PmsOperatorResetPwd");
-		PmsOperatorDO operator = pmsOperatorBiz.getById(getLong("id"));
+		PmsOperatorDO operator = pmsOperatorService.getById(getLong("id"));
 		if (operator == null) {
 			return operateError("无法获取要重置的信息");
 		}
@@ -1275,7 +1278,7 @@ public class PmsPermissionController extends PermissionBase {
 	public Object resetOperatorPwd() {
 		try {
 			Long operatorId = getLong("operatorId");
-			PmsOperatorDO operator = pmsOperatorBiz.getById(operatorId);
+			PmsOperatorDO operator = pmsOperatorService.getById(operatorId);
 			if (operator == null) {
 				return operateError("无法获取要重置密码的操作员信息");
 			}
@@ -1297,7 +1300,7 @@ public class PmsPermissionController extends PermissionBase {
 				return operateError(validateMsg); // 返回错误信息
 			}
 			
-			pmsOperatorBiz.updateOperatorPwd(operatorId, DigestUtils.sha1Hex(newPwd), false);
+			pmsOperatorService.updateOperatorPwd(operatorId, DigestUtils.sha1Hex(newPwd), false);
 
 			super.logEdit("重置操作员[" + operator.getLoginname() + "]的密码");
 			return operateSuccess();
@@ -1359,7 +1362,7 @@ public class PmsPermissionController extends PermissionBase {
 			}
 
 			// 更新密码
-			pmsOperatorBiz.updateOperatorPwd(operator.getId(), DigestUtils.sha1Hex(newPwd), true);
+			pmsOperatorService.updateOperatorPwd(operator.getId(), DigestUtils.sha1Hex(newPwd), true);
 
 			// 修改密码成功后要清空session，以强制重新登录
 			session.invalidate();//().remove(ConstantSession.OPERATOR_SESSION_KEY);
@@ -1391,7 +1394,7 @@ public class PmsPermissionController extends PermissionBase {
 				return operateError("无法从会话中获取操作员信息");
 			}
 
-			PmsOperatorDO operator = pmsOperatorBiz.getById(pmsOperator.getId());
+			PmsOperatorDO operator = pmsOperatorService.getById(pmsOperator.getId());
 			if (operator == null) {
 				return operateError("无法获取操作员信息");
 			}

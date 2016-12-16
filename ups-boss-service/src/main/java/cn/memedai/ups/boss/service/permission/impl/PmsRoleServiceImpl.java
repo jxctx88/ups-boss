@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +14,11 @@ import cn.memedai.ups.boss.dal.model.PmsRoleActionDO;
 import cn.memedai.ups.boss.dal.model.PmsRoleActionDOExample;
 import cn.memedai.ups.boss.dal.model.PmsRoleDO;
 import cn.memedai.ups.boss.dal.model.PmsRoleDOExample;
+import cn.memedai.ups.boss.dal.model.PmsRoleOperatorDO;
 import cn.memedai.ups.boss.service.page.PageParam;
+import cn.memedai.ups.boss.service.permission.PmsRoleActionService;
+import cn.memedai.ups.boss.service.permission.PmsRoleMenuService;
+import cn.memedai.ups.boss.service.permission.PmsRoleOperatorService;
 import cn.memedai.ups.boss.service.permission.PmsRoleService;
 
 import com.github.pagehelper.PageHelper;
@@ -28,6 +33,15 @@ public class PmsRoleServiceImpl implements PmsRoleService {
 	//角色-权限服务
 	@Autowired
 	PmsRoleActionDOMapper pmsRoleActionDOMapper;
+	
+	@Autowired
+	PmsRoleActionService pmsRoleActionService;
+	
+	@Autowired
+	PmsRoleMenuService pmsRoleMenuService;
+	
+	@Autowired
+	PmsRoleOperatorService pmsRoleOperatorService;
 	
 	@Override
 	public List<PmsRoleDO> listAll() {
@@ -81,6 +95,56 @@ public class PmsRoleServiceImpl implements PmsRoleService {
 		PageHelper.startPage(pageParam.getPageNum(), pageParam.getNumPerPage());
 		List<PmsRoleDO> list = pmsRoleDOMapper.selectByExample(example);
 		return new PageInfo<PmsRoleDO>(list);
+	}
+
+	@Override
+	public int deleteById(Long id) {
+		return pmsRoleDOMapper.deleteByPrimaryKey(id);
+	}
+
+	@Override
+	public PmsRoleDO getById(Long id) {
+		return pmsRoleDOMapper.selectByPrimaryKey(id);
+	}
+
+	@Override
+	public int create(PmsRoleDO pmsRole) {
+		return pmsRoleDOMapper.insertSelective(pmsRole);
+	}
+
+	@Override
+	public int update(PmsRoleDO pmsRole) {
+		return pmsRoleDOMapper.updateByPrimaryKeySelective(pmsRole);
+	}
+
+	@Override
+	public void deleteRoleById(Long roleId) {
+		// 删除角色权限关联表中的数据
+		pmsRoleActionService.deleteByRoleId(roleId);
+		// 删除角色菜单关联表中的数据
+		pmsRoleMenuService.deleteByRoleId(roleId);
+		// 删除角色操作员关联表中的数据
+		pmsRoleOperatorService.deleteByRoleId(roleId);
+		// 最后删除角色信息
+		deleteById(roleId);
+		
+	}
+
+	@Override
+	public String getRoleIdsByOperatorId(long operatorId) {
+		// 得到操作员和角色列表
+		List<PmsRoleOperatorDO> rpList = pmsRoleOperatorService.listByOperatorId(operatorId);
+		// 构建StringBuffer来拼字符串
+		StringBuffer roleIdsBuf = new StringBuffer("");
+		for (PmsRoleOperatorDO rp : rpList) {
+			roleIdsBuf.append(rp.getRoleid()).append(",");
+		}
+		String roleIds = roleIdsBuf.toString();
+		// 截取字符串
+		if (StringUtils.isNotBlank(roleIds) && roleIds.length() > 0) {
+			roleIds = roleIds.substring(0, roleIds.length() - 1);
+		}
+		return roleIds;
 	}
 
 }

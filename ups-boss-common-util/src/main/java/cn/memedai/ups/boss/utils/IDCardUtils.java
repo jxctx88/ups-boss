@@ -3,11 +3,10 @@ package cn.memedai.ups.boss.utils;
 import java.util.regex.Pattern;
 
 /**
- * 
- * @描述: 身份证工具类.
- * @作者: WuShuicheng .
- * @创建时间: 2013-8-9,上午9:50:22 .
- * @版本: 1.0 .
+ * 身份证工具类.
+ * @author tongxiong.cheng
+ * @date 2016-12-12 下午3:21:25
+ * @version 1.0
  */
 public class IDCardUtils {
 

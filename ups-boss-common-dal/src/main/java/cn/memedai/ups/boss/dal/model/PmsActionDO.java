@@ -1,7 +1,5 @@
 package cn.memedai.ups.boss.dal.model;
 
-import java.util.Date;
-
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -15,13 +13,8 @@ import lombok.ToString;
  */
 @Setter
 @Getter
-@ToString
-public class PmsActionDO {
-    private Long id;
-
-    private Integer version;
-
-    private Date createtime;
+@ToString(callSuper=true)
+public class PmsActionDO extends BaseEntity{
 
     /**
      * 权限名称
@@ -40,6 +33,11 @@ public class PmsActionDO {
      */
     private Long menuid;
     
+    /**
+     * 菜单名称
+     */
+    private String name;
     
     private PmsMenuDO menu;
+    
 }

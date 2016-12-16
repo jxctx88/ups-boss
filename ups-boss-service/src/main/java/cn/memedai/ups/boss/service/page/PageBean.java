@@ -5,11 +5,10 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 
- * @描述: 分页组件.
- * @作者: ZhangWensi,WuShuicheng .
- * @创建时间: 2013-7-25,下午11:33:41 .
- * @版本: 1.0 .
+ * 分页组件.
+ * @author tongxiong.cheng
+ * @date 2016-12-12 下午3:43:22
+ * @version 1.0
  */
 public class PageBean implements Serializable{
 	/**

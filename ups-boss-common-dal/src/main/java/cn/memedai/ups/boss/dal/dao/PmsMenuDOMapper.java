@@ -27,4 +27,11 @@ public interface PmsMenuDOMapper {
     int updateByPrimaryKeySelective(PmsMenuDO record);
 
     int updateByPrimaryKey(PmsMenuDO record);
+    
+	/**
+	 * 根据操作员ID获取所有的菜单列表
+	 * @param operatorId
+	 * @return
+	 */
+	List<PmsMenuDO> listMenuByOperatorId(long operatorId);
 }

@@ -29,4 +29,5 @@ public interface PmsRoleMenuService{
 	 * @return count.
 	 */
 	List<PmsRoleMenuDO> listByRoleId(Long roleId);
+	
 }

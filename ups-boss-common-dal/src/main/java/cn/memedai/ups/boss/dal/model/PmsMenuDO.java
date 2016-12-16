@@ -1,7 +1,5 @@
 package cn.memedai.ups.boss.dal.model;
 
-import java.util.Date;
-
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -13,13 +11,9 @@ import lombok.ToString;
  */
 @Setter
 @Getter
-@ToString
-public class PmsMenuDO {
-    private Long id;
-
-    private Integer version;
-
-    private Date createtime;
+@ToString(callSuper=true)
+public class PmsMenuDO  extends BaseEntity{
+   
     /**
      * 菜单名称NAME
      */

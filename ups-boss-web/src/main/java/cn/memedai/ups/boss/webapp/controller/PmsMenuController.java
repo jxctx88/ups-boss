@@ -15,9 +15,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import cn.memedai.ups.boss.dal.model.PmsActionDO;
 import cn.memedai.ups.boss.dal.model.PmsMenuDO;
-import cn.memedai.ups.boss.service.permission.biz.PmsActionBiz;
-import cn.memedai.ups.boss.service.permission.biz.PmsMenuBiz;
-import cn.memedai.ups.boss.webapp.annotation.Permission;
+import cn.memedai.ups.boss.service.permission.PmsActionService;
+import cn.memedai.ups.boss.service.permission.PmsMenuService;
+import cn.memedai.ups.boss.service.permission.annotation.Permission;
 import cn.memedai.ups.boss.webapp.base.PermissionBase;
 
 /**
@@ -39,12 +39,12 @@ public class PmsMenuController extends PermissionBase {
 	public PmsMenuDO getModel() {
 		return pmsMenu;//(PmsMenuDO) ModelDrivenUtil.cleanModel(pmsMenu);
 	}*/
+	
+	@Autowired
+	private PmsMenuService pmsMenuService;
 
 	@Autowired
-	private PmsMenuBiz pmsMenuBiz;
-
-	@Autowired
-	private PmsActionBiz pmsActionBiz;
+	private PmsActionService pmsActionService;
 
 	/**
 	 * 列出要管理的菜单.
@@ -54,7 +54,7 @@ public class PmsMenuController extends PermissionBase {
 	@Permission("pms:menu:view")
 	@RequestMapping("/listPmsMenu")
 	public Object listPmsMenu(HttpServletRequest request) {
-		String str = pmsMenuBiz.getTreeMenu(EDIT_MENU_ACTION);
+		String str = pmsMenuService.getTreeMenu(EDIT_MENU_ACTION);
 		ModelAndView mov = new ModelAndView("/pms/PmsMenuList");
 		mov.addObject("tree", str);
 		return mov;
@@ -71,7 +71,7 @@ public class PmsMenuController extends PermissionBase {
 		ModelAndView mov = new ModelAndView("/pms/PmsMenuAdd");
 		String pid = request.getParameter("pid");
 		if (null != pid) {
-			PmsMenuDO pmsMenuDO = pmsMenuBiz.getById(Long.valueOf(pid));
+			PmsMenuDO pmsMenuDO = pmsMenuService.getById(Long.valueOf(pid));
 			PmsMenuDO pmsMenu = new PmsMenuDO();
 			pmsMenu.setParent(pmsMenuDO);
 			mov.addObject("model", pmsMenu);
@@ -92,11 +92,11 @@ public class PmsMenuController extends PermissionBase {
 		try {
 			String name = model.getName();
 			//Map<String, Object> map = new HashMap<String, Object>();
-			List<PmsMenuDO> list = pmsMenuBiz.getMenuByNameAndIsLeaf((short) 1,name);
+			List<PmsMenuDO> list = pmsMenuService.getMenuByNameAndIsLeaf((short) 1,name);
 			if (list.size() > 0) {
 				return operateError("同级菜单名称不能重复");
 			}
-			pmsMenuBiz.createMenu(model);
+			pmsMenuService.createMenu(model);
 			super.logSave("添加菜单[" + model.getName() + "]");
 		} catch (Exception e) {
 			// 记录系统操作日志
@@ -118,7 +118,7 @@ public class PmsMenuController extends PermissionBase {
 		ModelAndView mov = new ModelAndView("/pms/PmsMenuEdit");
 		String id = request.getParameter("id");
 		if (null != id) {
-			PmsMenuDO pmsMenu = pmsMenuBiz.getById(Long.valueOf(id));
+			PmsMenuDO pmsMenu = pmsMenuService.getById(Long.valueOf(id));
 			mov.addObject("pmsMenu", pmsMenu);
 			//super.pushData(pmsMenu);
 		}
@@ -149,7 +149,7 @@ public class PmsMenuController extends PermissionBase {
 				menu.setTargetname("");
 			}
 			menu.setParent(parentMenu);
-			pmsMenuBiz.update(menu);
+			pmsMenuService.update(menu);
 			// 记录系统操作日志
 			super.logEdit("修改菜单,菜单名称[" + menu.getName() + "]");
 			return operateSuccess();
@@ -177,7 +177,7 @@ public class PmsMenuController extends PermissionBase {
 			if (menuId == null || menuId.longValue() == 0) {
 				return operateError("无法获取要删除的数据");
 			}
-			PmsMenuDO menu = pmsMenuBiz.getById(menuId);
+			PmsMenuDO menu = pmsMenuService.getById(menuId);
 			if (menu == null) {
 				return operateError("无法获取要删除的数据");
 			}
@@ -185,29 +185,29 @@ public class PmsMenuController extends PermissionBase {
 			Long parentId = menu.getParentid(); // 获取父菜单ID
 
 			// 先判断此菜单下是否有子菜单
-			List<PmsMenuDO> childMenuList = pmsMenuBiz.listByParentId(menuId);
+			List<PmsMenuDO> childMenuList = pmsMenuService.listByParentId(menuId);
 			if (childMenuList != null && !childMenuList.isEmpty()) {
 				return operateError("此菜单下关联有【" + childMenuList.size() + "】个子菜单，不能支接删除!");
 			}
 
 			// 判断是否有权限关联到此菜单上，如有则不能删除
-			List<PmsActionDO> actionList = pmsActionBiz.listByMenuId(menuId);
+			List<PmsActionDO> actionList = pmsActionService.listByMenuId(menuId);
 			if (actionList != null && !actionList.isEmpty()) {
 				return operateError("此菜单下关联有【" + actionList.size() + "】个权限，要先解除关联后才能删除此菜单!");
 			}
 
 			// 删除掉菜单
-			pmsMenuBiz.delete(menuId);
+			pmsMenuService.delete(menuId);
 
 			// 删除菜单后，要判断其父菜单是否还有子菜单，如果没有子菜单了就要将其父菜单设为叶子节点
 			if(0 != parentId){
-				List<PmsMenuDO> childList = pmsMenuBiz.listByParentId(parentId);
+				List<PmsMenuDO> childList = pmsMenuService.listByParentId(parentId);
 				if (childList == null || childList.isEmpty()) {
 					// 此时要将父菜单设为叶子
-					PmsMenuDO parent = pmsMenuBiz.getById(parentId);
+					PmsMenuDO parent = pmsMenuService.getById(parentId);
 					//parent.setIsleaf(true);
 					parent.setIsleaf((short)1);
-					pmsMenuBiz.update(parent);
+					pmsMenuService.update(parent);
 				}
 			}
 			// 记录系统操作日志

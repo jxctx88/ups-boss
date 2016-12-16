@@ -8,9 +8,9 @@ import org.apache.commons.lang3.StringUtils;
 
 /**
  * 字符串工具类.
- * 
- * @author WuShuicheng.
- * @version 1.0, 2013-3-23,上午12:22:12.
+ * @author tongxiong.cheng
+ * @date 2016-12-12 下午3:24:41
+ * @version 1.0
  */
 public final class StrUtil {
 

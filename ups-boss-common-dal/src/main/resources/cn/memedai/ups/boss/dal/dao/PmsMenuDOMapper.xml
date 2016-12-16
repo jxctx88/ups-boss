@@ -296,4 +296,15 @@
       TARGETNAME = #{targetname,jdbcType=VARCHAR}
     where ID = #{id,jdbcType=BIGINT}
   </update>
+  
+  <!-- 根据操作员ID获取所有的菜单列表 -->
+  <select id="listMenuByOperatorId" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+   	select
+    <include refid="Base_Column_List" />
+   	from tbl_boss_pms_menu 
+	where id in 
+	(select menuid from tbl_boss_pms_role_menu 
+		where roleid in(select ROLEID from tbl_boss_pms_role_operator WHERE OPERATORID = #{operatorid,jdbcType=BIGINT} )
+	)
+  </select>
 </mapper>

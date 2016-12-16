@@ -61,4 +61,47 @@ public interface PmsRoleService{
 	 * @return
 	 */
 	PageInfo<PmsRoleDO> listPage(PageParam pageParam,PmsRoleDOExample example);
+	
+	/**
+	 * 根据角色ID删除角色 .
+	 * @param id
+	 * @return
+	 */
+	int deleteById(Long id);
+	
+	/**
+	 * 根据ID获取角色.
+	 * @param id
+	 * @return
+	 */
+	PmsRoleDO getById(Long id);
+	
+	/**
+	 * 保存角色
+	 * @param pmsRole
+	 * @return
+	 */
+	int create(PmsRoleDO pmsRole);
+	
+	/**
+	 * 根据主键ID更新角色
+	 * @param pmsRole
+	 * @return
+	 */
+	int update(PmsRoleDO pmsRole);
+	
+	/**
+	 * 根据角色ID删除角色，并删除与操作员、权限、菜单的关联关系.
+	 * 
+	 * @param roleId
+	 *            .
+	 */
+	void deleteRoleById(Long roleId);
+	
+	/**
+	 * 根据操作员ID获得该操作员的所有角色id所拼成的String，每个ID用“,”分隔
+	 * @param operatorId 操作员ID
+	 * @return roleIds
+	 */
+	String getRoleIdsByOperatorId(long operatorId);
 }

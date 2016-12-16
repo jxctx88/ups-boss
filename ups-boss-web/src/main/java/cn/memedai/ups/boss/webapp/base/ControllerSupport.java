@@ -6,8 +6,6 @@ import java.net.InetAddress;
 import java.net.SocketTimeoutException;
 import java.net.URLDecoder;
 import java.net.UnknownHostException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -18,8 +16,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import lombok.extern.slf4j.Slf4j;
-import net.sf.json.JsonConfig;
-import net.sf.json.processors.JsonValueProcessor;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -43,35 +39,9 @@ public class ControllerSupport {
 	private static ThreadLocal<Map<String, Object>> outPutMsg = new ThreadLocal<Map<String, Object>>();
 
 	/**
-	 * 编码类型 ISO-8859-1.
-	 */
-	// private static final String ISO8859_1 = "iso8859-1";
-	/**
 	 * 编码类型 UTF-8.
 	 */
 	private static final String UTF_8 = "utf-8";
-
-	protected JsonConfig getDefaultJsonConfig() {
-		JsonConfig config = new JsonConfig();
-		config.registerJsonValueProcessor(Date.class, new JsonValueProcessor() {
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-
-			public Object processObjectValue(String key, Object value, JsonConfig cfg) {
-				if (value != null && value instanceof Date) {
-					return sdf.format(value);
-				}
-				return null;
-			}
-
-			public Object processArrayValue(Object value, JsonConfig cfg) {
-				if (value != null && value instanceof Date) {
-					return sdf.format(value);
-				}
-				return null;
-			}
-		});
-		return config;
-	}
 
 	/**
 	 * 线程绑定，其内容会在outPrint方法调用后清空
@@ -100,7 +70,7 @@ public class ControllerSupport {
 	public void outPrint(HttpServletResponse response, Object result) {
 		PrintWriter out = null;
 		try {
-			response.setCharacterEncoding("utf-8");
+			response.setCharacterEncoding(UTF_8);
 			out = response.getWriter();
 			out.print(result.toString());
 			getOutputMsg().clear();
@@ -120,7 +90,7 @@ public class ControllerSupport {
 	public void outWrite(HttpServletResponse response, Object result) {
 		PrintWriter out = null;
 		try {
-			response.setCharacterEncoding("utf-8");
+			response.setCharacterEncoding(UTF_8);
 			out = response.getWriter();
 			out.write(result.toString());
 			out.close();
@@ -130,27 +100,6 @@ public class ControllerSupport {
 			out.close();
 		}
 	}
-
-	//public PageBean pageBean;
-
-	public Integer pageNum;
-
-	/**
-	 * pageBean.
-	 * 
-	 * @return the pageBean
-	 */
-	/*public PageBean getPageBean() {
-		return pageBean;
-	}*/
-
-	/**
-	 * @param pageBean
-	 *            the pageBean to set
-	 */
-	/*public void setPageBean(PageBean pageBean) {
-		this.pageBean = pageBean;
-	}*/
 
 	/**
 	 * 取得当前request
@@ -189,29 +138,12 @@ public class ControllerSupport {
 	}
 
 	/**
-	 * 获取session里面的属性
-	 * 
-	 * @return
-	 */
-	/*public Map<String, Object> getSessionMap() {
-		return ThreadLocalContext.getHttpRequest().getSession();
-	}*/
-
-	/**
-	 * 获取request中的application对象.
-	 */
-	/*public Map<String, Object> getApplicationMap() {
-		return ActionContext.getContext().getApplication();
-	}*/
-
-	/**
 	 * 取得当前web应用的根路径
 	 * 
 	 * @return
 	 */
-	@SuppressWarnings("deprecation")
 	public String getWebRootPath() {
-		return ThreadLocalContext.getHttpRequest().getRealPath("/");
+		return ThreadLocalContext.getHttpRequest().getSession().getServletContext().getRealPath("/");
 	}
 
 	/**
@@ -384,23 +316,7 @@ public class ControllerSupport {
 	public PageParam getPageParam() {
 		return new PageParam(getPageNum(), getNumPerPage());
 	}
-
-	// //////////////////////// 存值方法 /////////////////////////////////
-	/**
-	 * 将数据放入Struts2上下文的值栈中.<br/>
-	 * ActionContext.getContext().getValueStack().push(obj);
-	 */
-	public void pushData(Object obj) {
-		//ActionContext.getContext().getValueStack().push(obj);
-	}
-
-	/**
-	 * 将数据放入Struts2上下文中.<br/>
-	 * ActionContext.getContext().put(key, value);
-	 */
-	public void putData(String key, Object value) {
-		//ActionContext.getContext().put(key, value);
-	}
+	
 
 	// ///////////////////////getHttpRequest()方法扩展//////////////////////////
 	/**
@@ -561,7 +477,7 @@ public class ControllerSupport {
 	 * @param propertyName
 	 *            要校验的属性中文名称，如“登录名”.
 	 * @param property
-	 *            要校验的属性值，如“gzzyzz”.
+	 *            要校验的属性值，如“helloworld”.
 	 * @param isRequire
 	 *            是否必填:true or false.
 	 * @param minLength
@@ -712,7 +628,7 @@ public class ControllerSupport {
 		return getHttpRequest().getHeader("referer");
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		//System.out.println(StringUtil.isNotNull(" "));
 	}
 
