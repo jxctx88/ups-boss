@@ -59,6 +59,9 @@ public class PmsOperatorServiceImpl implements PmsOperatorService {
 		}
 		PmsOperatorDOExample example = new PmsOperatorDOExample();
 		
+		if(CollectionUtils.isEmpty(operatorIds)){
+			return null;
+		}
 		example.createCriteria().andIdIn(operatorIds);
 		
 		return pmsOperatorDOMapper.selectByExample(example);
