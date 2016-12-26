@@ -9,10 +9,10 @@
 		<table class="searchContent">
 			<tr>
 			    <td>
-					权限名称：<input type="text" name="actionName" value="${paramMap.actionname}" size="30" alt="模糊查询"  />
+					权限名称：<input type="text" name="actionname" value="${paramMap.actionname}" size="30" alt="模糊查询"  />
 				</td>
 				<td>
-					权限标识：<input type="text" name="act" value="${paramMap.action}" size="30" alt="精确查询"  />
+					权限标识：<input type="text" name="action" value="${paramMap.action}" size="30" alt="精确查询"  />
 				</td>
 				<td>
 					<div class="subBar">
@@ -53,7 +53,7 @@
 				    <td>${st.index+1}</td>
 					<td>${pmsActionDO.actionname}</td>
 					<td>${pmsActionDO.action}</td>
-					<td>${pmsActionDO.menu.name}</td>
+					<td>${pmsActionDO.menuName}</td>
 					<td>${pmsActionDO.remark}</td>
 					<td>
 						<fmt:formatDate value="${pmsActionDO.createtime}" pattern="yyyy-MM-dd"/>
