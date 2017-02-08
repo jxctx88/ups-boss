@@ -44,5 +44,16 @@ public class TestPmsActionDOMapper extends BaseTest {
 		System.out.println(list.size());
 	}
 	
+	
+	@Test
+	public void testListByExample(){
+		PmsActionDO pmsActionDO = new PmsActionDO();
+		pmsActionDO.setId(1L);
+		List<PmsActionDO> pmsActionDOList = pmsActionDOMapper.listByExample(pmsActionDO);
+		for(PmsActionDO onePmsActionDO : pmsActionDOList){
+			System.out.println(onePmsActionDO.toString());
+		}
+	}
+	
 }
 

@@ -37,8 +37,8 @@ public class PmsActionDO extends BaseEntity{
     /**
      * 菜单名称
      */
-    private String name;
+    private String menuName;
     
-    private PmsMenuDO menu;
+    //private PmsMenuDO menu;
     
 }

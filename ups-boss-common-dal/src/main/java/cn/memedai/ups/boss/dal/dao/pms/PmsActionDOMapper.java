@@ -28,4 +28,12 @@ public interface PmsActionDOMapper {
     int updateByPrimaryKeySelective(PmsActionDO record);
 
     int updateByPrimaryKey(PmsActionDO record);
+    
+    /**
+     * 根据条件查询，包含菜单名称 
+     * @param pmsActionDO
+     * @return
+     */
+    List<PmsActionDO> listByExample(PmsActionDO pmsActionDO);
 }
+

@@ -82,10 +82,10 @@ public interface PmsActionService{
 	/**
 	 * 分页查询
 	 * @param pageParam
-	 * @param example 查询条件
+	 * @param pmsActionDO 查询条件
 	 * @return
 	 */
-	PageInfo<PmsActionDO> listPage(PageParam pageParam,PmsActionDOExample example);
+	PageInfo<PmsActionDO> listPage(PageParam pageParam,PmsActionDO pmsActionDO);
 
 	/**
 	 * 根据ID删除权限信息

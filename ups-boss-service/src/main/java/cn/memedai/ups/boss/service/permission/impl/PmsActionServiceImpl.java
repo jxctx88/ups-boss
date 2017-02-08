@@ -94,14 +94,14 @@ public class PmsActionServiceImpl implements PmsActionService {
 	}
 
 	@Override
-	public PageInfo<PmsActionDO> listPage(PageParam pageParam,PmsActionDOExample example) {
+	public PageInfo<PmsActionDO> listPage(PageParam pageParam,PmsActionDO pmsActionDO) {
 		PageHelper.startPage(pageParam.getPageNum(), pageParam.getNumPerPage());
-		List<PmsActionDO> list = pmsActionDOMapper.selectByExample(example);
+		List<PmsActionDO> list = pmsActionDOMapper.listByExample(pmsActionDO);
 		//根据menuid查询菜单表(menu)
-		for(PmsActionDO pmsActionDO : list){
+		/*for(PmsActionDO pmsActionDO : list){
 			PmsMenuDO pmsMenuDO = pmsMenuDOMapper.selectByPrimaryKey(pmsActionDO.getMenuid());
 			pmsActionDO.setMenu(pmsMenuDO);
-		}
+		}*/
 		return new PageInfo<PmsActionDO>(list);
 	}
 
@@ -114,7 +114,7 @@ public class PmsActionServiceImpl implements PmsActionService {
 	public PmsActionDO getActionAndMenuById(Long id) {
 		PmsActionDO pmsActionDO =  pmsActionDOMapper.selectByPrimaryKey(id);
 		PmsMenuDO pmsMenuDO = pmsMenuDOMapper.selectByPrimaryKey(pmsActionDO.getMenuid());
-		pmsActionDO.setMenu(pmsMenuDO);
+		//pmsActionDO.setMenu(pmsMenuDO);
 		return pmsActionDO;
 	}
 	

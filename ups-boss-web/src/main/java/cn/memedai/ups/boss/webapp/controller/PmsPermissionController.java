@@ -84,20 +84,15 @@ public class PmsPermissionController extends PermissionBase {
 			//paramMap.put("actionName", getString("actionName")); // 权限名称（模糊查询）
 			//paramMap.put("action", getString("act")); // 权限（精确查询）
 			//paramMap.put("act", getString("act"));
-			PmsActionDOExample example = new PmsActionDOExample();
+			PmsActionDO pmsActionDO = new PmsActionDO();
 			String actionname = getString("actionname");//权限名称（模糊查询）
 			String action = getString("action");//权限（精确查询）
-			Criteria  criteria = example.createCriteria();
+			paramMap.put("actionname", actionname);
+			paramMap.put("action", action);
+			pmsActionDO.setActionname(actionname);
+			pmsActionDO.setAction(action);
 			
-			if(StringUtils.isNoneBlank(actionname)){
-				criteria.andActionnameLike(actionname);
-			}
-			
-			if(StringUtils.isNoneBlank(action)){
-				criteria.andActionEqualTo(action);
-			}
-			
-			PageInfo<PmsActionDO> pageInfo = pmsActionService.listPage(getPageParam(), example);
+			PageInfo<PmsActionDO> pageInfo = pmsActionService.listPage(getPageParam(), pmsActionDO);
 			//super.pushData(pageBean);
 			//super.pushData(paramMap); // 回显查询条件值
 			model.addObject("paramMap", paramMap);
@@ -145,7 +140,7 @@ public class PmsPermissionController extends PermissionBase {
 			PmsMenuDO menu = new PmsMenuDO();
 			menu.setId(menuId);
 			act.setMenuid(menuId);
-			act.setMenu(menu); // 设置菜单ID
+			//act.setMenu(menu); // 设置菜单ID
 			
 			// 表单数据校验
 			String validateMsg = validatePmsAction(act);
@@ -206,8 +201,8 @@ public class PmsPermissionController extends PermissionBase {
 		// 描述 desc
 		msg += lengthValidate("描述", desc, true, 3, 60);
 		// 校验菜单ID是否存在
-		if (null != pmsAction.getMenu().getId()) {
-			PmsMenuDO menu = pmsMenuService.getById(pmsAction.getMenu().getId());
+		if (null != pmsAction.getMenuid()) {
+			PmsMenuDO menu = pmsMenuService.getById(pmsAction.getMenuid());
 			if (menu == null) {
 				msg += "，请选择权限关联的菜单";
 			}
