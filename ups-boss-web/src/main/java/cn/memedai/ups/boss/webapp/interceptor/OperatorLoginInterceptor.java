@@ -11,7 +11,7 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
 import cn.memedai.ups.boss.constants.PermissionConstant;
-import cn.memedai.ups.boss.dal.model.PmsOperatorDO;
+import cn.memedai.ups.boss.dal.model.pms.PmsOperatorDO;
 
 /**
  * 

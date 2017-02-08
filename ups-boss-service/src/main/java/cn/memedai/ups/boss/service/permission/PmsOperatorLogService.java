@@ -1,8 +1,8 @@
 package cn.memedai.ups.boss.service.permission;
 
-import cn.memedai.ups.boss.dal.model.PmsOperatorDO;
-import cn.memedai.ups.boss.dal.model.PmsOperatorLogDO;
-import cn.memedai.ups.boss.dal.model.PmsOperatorLogDOExample;
+import cn.memedai.ups.boss.dal.model.pms.PmsOperatorDO;
+import cn.memedai.ups.boss.dal.model.pms.PmsOperatorLogDO;
+import cn.memedai.ups.boss.dal.model.pms.PmsOperatorLogDOExample;
 import cn.memedai.ups.boss.enums.OperatorLogStatusEnum;
 import cn.memedai.ups.boss.enums.OperatorLogTypeEnum;
 import cn.memedai.ups.boss.service.page.PageParam;

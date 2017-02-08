@@ -5,8 +5,8 @@ import java.util.Date;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import cn.memedai.ups.boss.dal.dao.PmsOperatorDOMapper;
-import cn.memedai.ups.boss.dal.model.PmsOperatorDO;
+import cn.memedai.ups.boss.dal.dao.pms.PmsOperatorDOMapper;
+import cn.memedai.ups.boss.dal.model.pms.PmsOperatorDO;
 
 public class TestPmsOperatorDOMapper extends BaseTest {
 	

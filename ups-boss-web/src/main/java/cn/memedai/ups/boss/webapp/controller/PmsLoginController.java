@@ -19,8 +19,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import cn.memedai.ups.boss.constants.GlobalConstant;
 import cn.memedai.ups.boss.constants.PermissionConstant;
-import cn.memedai.ups.boss.dal.model.PmsActionDO;
-import cn.memedai.ups.boss.dal.model.PmsOperatorDO;
+import cn.memedai.ups.boss.dal.model.pms.PmsActionDO;
+import cn.memedai.ups.boss.dal.model.pms.PmsOperatorDO;
 import cn.memedai.ups.boss.enums.OperatorStatusEnum;
 import cn.memedai.ups.boss.service.permission.PmsActionService;
 import cn.memedai.ups.boss.service.permission.PmsMenuService;

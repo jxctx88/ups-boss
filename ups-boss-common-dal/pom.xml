@@ -51,10 +51,10 @@
         </dependency>
 
         <!--sql servier 2008 driver-->
-       <!-- <dependency>
+       <dependency>
             <groupId>net.sourceforge.jtds</groupId>
             <artifactId>jtds</artifactId>
-        </dependency>-->
+        </dependency>
         <!--oracle driver-->
         <!--<dependency>
             <groupId>cn.memedai</groupId>

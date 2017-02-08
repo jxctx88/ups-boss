@@ -2,8 +2,8 @@ package cn.memedai.ups.boss.service.permission;
 
 import java.util.List;
 
-import cn.memedai.ups.boss.dal.model.PmsRoleDO;
-import cn.memedai.ups.boss.dal.model.PmsRoleDOExample;
+import cn.memedai.ups.boss.dal.model.pms.PmsRoleDO;
+import cn.memedai.ups.boss.dal.model.pms.PmsRoleDOExample;
 import cn.memedai.ups.boss.service.page.PageParam;
 
 import com.github.pagehelper.PageInfo;

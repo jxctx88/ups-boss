@@ -15,10 +15,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import cn.memedai.ups.boss.dal.model.PmsOperatorDO;
-import cn.memedai.ups.boss.dal.model.PmsOperatorLogDO;
-import cn.memedai.ups.boss.dal.model.PmsOperatorLogDOExample;
-import cn.memedai.ups.boss.dal.model.PmsOperatorLogDOExample.Criteria;
+import cn.memedai.ups.boss.dal.model.pms.PmsOperatorDO;
+import cn.memedai.ups.boss.dal.model.pms.PmsOperatorLogDO;
+import cn.memedai.ups.boss.dal.model.pms.PmsOperatorLogDOExample;
+import cn.memedai.ups.boss.dal.model.pms.PmsOperatorLogDOExample.Criteria;
 import cn.memedai.ups.boss.enums.OperatorLogStatusEnum;
 import cn.memedai.ups.boss.enums.OperatorLogTypeEnum;
 import cn.memedai.ups.boss.service.permission.PmsOperatorLogService;

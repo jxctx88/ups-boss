@@ -11,10 +11,10 @@ import org.springframework.stereotype.Service;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
-import cn.memedai.ups.boss.dal.dao.PmsOperatorLogDOMapper;
-import cn.memedai.ups.boss.dal.model.PmsOperatorDO;
-import cn.memedai.ups.boss.dal.model.PmsOperatorLogDO;
-import cn.memedai.ups.boss.dal.model.PmsOperatorLogDOExample;
+import cn.memedai.ups.boss.dal.dao.pms.PmsOperatorLogDOMapper;
+import cn.memedai.ups.boss.dal.model.pms.PmsOperatorDO;
+import cn.memedai.ups.boss.dal.model.pms.PmsOperatorLogDO;
+import cn.memedai.ups.boss.dal.model.pms.PmsOperatorLogDOExample;
 import cn.memedai.ups.boss.enums.OperatorLogStatusEnum;
 import cn.memedai.ups.boss.enums.OperatorLogTypeEnum;
 import cn.memedai.ups.boss.service.page.PageParam;
@@ -28,8 +28,7 @@ public class PmsOperatorLogServiceImpl implements PmsOperatorLogService {
 	PmsOperatorLogDOMapper pmsOperatorLogDOMapper;
 
 	@Override
-	public PageInfo<PmsOperatorLogDO> listPage(PageParam pageParam,
-			PmsOperatorLogDOExample example) {
+	public PageInfo<PmsOperatorLogDO> listPage(PageParam pageParam,PmsOperatorLogDOExample example) {
 		PageHelper.startPage(pageParam.getPageNum(), pageParam.getNumPerPage());
 		List<PmsOperatorLogDO> list = pmsOperatorLogDOMapper.selectByExample(example);
 		return new PageInfo<PmsOperatorLogDO>(list);

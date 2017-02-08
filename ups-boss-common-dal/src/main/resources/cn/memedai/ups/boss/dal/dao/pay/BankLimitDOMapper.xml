@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.memedai.ups.boss.dal.dao.pay.BankLimitDOMapper" >
+  <resultMap id="BaseResultMap" type="cn.memedai.ups.boss.dal.model.pay.BankLimitDO" >
+    <result column="ID" property="id" jdbcType="BIGINT" />
+    <result column="CHANNEL_ID" property="channelId" jdbcType="VARCHAR" />
+    <result column="BANK_ID" property="bankId" jdbcType="VARCHAR" />
+    <result column="BANK_NAME" property="bankName" jdbcType="VARCHAR" />
+    <result column="SINGLE_LIMIT" property="singleLimit" jdbcType="BIGINT" />
+    <result column="DATE_LIMIT" property="dateLimit" jdbcType="BIGINT" />
+    <result column="PAY_TYPE" property="payType" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="LAST_UPDATE_TIME" property="lastUpdateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+ 
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+ 
+  <sql id="Base_Column_List" >
+    ID, CHANNEL_ID, BANK_ID, BANK_NAME, SINGLE_LIMIT, DATE_LIMIT, PAY_TYPE, STATUS, CREATE_TIME, 
+    LAST_UPDATE_TIME
+  </sql>
+  
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="cn.memedai.ups.boss.dal.model.pay.BankLimitDOExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from UPS.TB_BANK_LIMIT
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="cn.memedai.ups.boss.dal.model.pay.BankLimitDOExample" >
+    delete from UPS.TB_BANK_LIMIT
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="cn.memedai.ups.boss.dal.model.pay.BankLimitDO" >
+    insert into UPS.TB_BANK_LIMIT (ID, CHANNEL_ID, BANK_ID, 
+      BANK_NAME, SINGLE_LIMIT, DATE_LIMIT, 
+      PAY_TYPE, STATUS, CREATE_TIME, 
+      LAST_UPDATE_TIME)
+    values (#{id,jdbcType=BIGINT}, #{channelId,jdbcType=VARCHAR}, #{bankId,jdbcType=VARCHAR}, 
+      #{bankName,jdbcType=VARCHAR}, #{singleLimit,jdbcType=BIGINT}, #{dateLimit,jdbcType=BIGINT}, 
+      #{payType,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{lastUpdateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.memedai.ups.boss.dal.model.pay.BankLimitDO" >
+    insert into UPS.TB_BANK_LIMIT
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="channelId != null" >
+        CHANNEL_ID,
+      </if>
+      <if test="bankId != null" >
+        BANK_ID,
+      </if>
+      <if test="bankName != null" >
+        BANK_NAME,
+      </if>
+      <if test="singleLimit != null" >
+        SINGLE_LIMIT,
+      </if>
+      <if test="dateLimit != null" >
+        DATE_LIMIT,
+      </if>
+      <if test="payType != null" >
+        PAY_TYPE,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="lastUpdateTime != null" >
+        LAST_UPDATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="channelId != null" >
+        #{channelId,jdbcType=VARCHAR},
+      </if>
+      <if test="bankId != null" >
+        #{bankId,jdbcType=VARCHAR},
+      </if>
+      <if test="bankName != null" >
+        #{bankName,jdbcType=VARCHAR},
+      </if>
+      <if test="singleLimit != null" >
+        #{singleLimit,jdbcType=BIGINT},
+      </if>
+      <if test="dateLimit != null" >
+        #{dateLimit,jdbcType=BIGINT},
+      </if>
+      <if test="payType != null" >
+        #{payType,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateTime != null" >
+        #{lastUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="cn.memedai.ups.boss.dal.model.pay.BankLimitDOExample" resultType="java.lang.Integer" >
+    select count(*) from UPS.TB_BANK_LIMIT
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update UPS.TB_BANK_LIMIT
+    <set >
+      <if test="record.id != null" >
+        ID = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.channelId != null" >
+        CHANNEL_ID = #{record.channelId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bankId != null" >
+        BANK_ID = #{record.bankId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bankName != null" >
+        BANK_NAME = #{record.bankName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.singleLimit != null" >
+        SINGLE_LIMIT = #{record.singleLimit,jdbcType=BIGINT},
+      </if>
+      <if test="record.dateLimit != null" >
+        DATE_LIMIT = #{record.dateLimit,jdbcType=BIGINT},
+      </if>
+      <if test="record.payType != null" >
+        PAY_TYPE = #{record.payType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null" >
+        STATUS = #{record.status,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.lastUpdateTime != null" >
+        LAST_UPDATE_TIME = #{record.lastUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update UPS.TB_BANK_LIMIT
+    set ID = #{record.id,jdbcType=BIGINT},
+      CHANNEL_ID = #{record.channelId,jdbcType=VARCHAR},
+      BANK_ID = #{record.bankId,jdbcType=VARCHAR},
+      BANK_NAME = #{record.bankName,jdbcType=VARCHAR},
+      SINGLE_LIMIT = #{record.singleLimit,jdbcType=BIGINT},
+      DATE_LIMIT = #{record.dateLimit,jdbcType=BIGINT},
+      PAY_TYPE = #{record.payType,jdbcType=VARCHAR},
+      STATUS = #{record.status,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      LAST_UPDATE_TIME = #{record.lastUpdateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>

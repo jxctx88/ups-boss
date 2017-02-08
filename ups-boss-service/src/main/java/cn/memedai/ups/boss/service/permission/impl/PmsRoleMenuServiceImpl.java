@@ -5,9 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import cn.memedai.ups.boss.dal.dao.PmsRoleMenuDOMapper;
-import cn.memedai.ups.boss.dal.model.PmsRoleMenuDO;
-import cn.memedai.ups.boss.dal.model.PmsRoleMenuDOExample;
+import cn.memedai.ups.boss.dal.dao.pms.PmsRoleMenuDOMapper;
+import cn.memedai.ups.boss.dal.model.pms.PmsRoleMenuDO;
+import cn.memedai.ups.boss.dal.model.pms.PmsRoleMenuDOExample;
 import cn.memedai.ups.boss.service.permission.PmsRoleMenuService;
 
 @Service("pmsRoleMenuService")

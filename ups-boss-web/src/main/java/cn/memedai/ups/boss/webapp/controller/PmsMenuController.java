@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import cn.memedai.ups.boss.dal.model.PmsActionDO;
-import cn.memedai.ups.boss.dal.model.PmsMenuDO;
+import cn.memedai.ups.boss.dal.model.pms.PmsActionDO;
+import cn.memedai.ups.boss.dal.model.pms.PmsMenuDO;
 import cn.memedai.ups.boss.service.permission.PmsActionService;
 import cn.memedai.ups.boss.service.permission.PmsMenuService;
 import cn.memedai.ups.boss.service.permission.annotation.Permission;

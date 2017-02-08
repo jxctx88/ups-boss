@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import cn.memedai.ups.boss.constants.PermissionConstant;
-import cn.memedai.ups.boss.dal.model.PmsOperatorDO;
+import cn.memedai.ups.boss.dal.model.pms.PmsOperatorDO;
 import cn.memedai.ups.boss.enums.OperatorLogStatusEnum;
 import cn.memedai.ups.boss.enums.OperatorLogTypeEnum;
 import cn.memedai.ups.boss.service.context.ThreadLocalContext;

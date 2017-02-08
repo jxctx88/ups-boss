@@ -2,7 +2,7 @@ package cn.memedai.ups.boss.service.permission;
 
 import java.util.List;
 
-import cn.memedai.ups.boss.dal.model.PmsRoleActionDO;
+import cn.memedai.ups.boss.dal.model.pms.PmsRoleActionDO;
 
 
 /**

@@ -1,0 +1,639 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.memedai.ups.boss.dal.dao.pay.OrderDOMapper" >
+  <resultMap id="BaseResultMap" type="cn.memedai.ups.boss.dal.model.pay.OrderDO" >
+    <id column="ORDER_ID" property="orderId" jdbcType="BIGINT" />
+    <result column="UPS_TRANS_NUM" property="upsTransNum" jdbcType="VARCHAR" />
+    <result column="TRADE_AMOUNT" property="tradeAmount" jdbcType="BIGINT" />
+    <result column="MERCHANT_CODE" property="merchantCode" jdbcType="CHAR" />
+    <result column="MERCHANT_TRADE_CODE" property="merchantTradeCode" jdbcType="VARCHAR" />
+    <result column="PRODUCT_NAME" property="productName" jdbcType="VARCHAR" />
+    <result column="PRODUCT_DESC" property="productDesc" jdbcType="VARCHAR" />
+    <result column="MERCHANT_TRANS_DATE" property="merchantTransDate" jdbcType="CHAR" />
+    <result column="MERCHANT_TRANS_TIME" property="merchantTransTime" jdbcType="CHAR" />
+    <result column="MEMBER_ID" property="memberId" jdbcType="VARCHAR" />
+    <result column="BG_URL" property="bgUrl" jdbcType="VARCHAR" />
+    <result column="ACCOUNT_ID" property="accountId" jdbcType="BIGINT" />
+    <result column="UPS_TRANS_DATE" property="upsTransDate" jdbcType="CHAR" />
+    <result column="UPS_TRANS_TIME" property="upsTransTime" jdbcType="CHAR" />
+    <result column="RESP_CODE" property="respCode" jdbcType="VARCHAR" />
+    <result column="CODE_MSG" property="codeMsg" jdbcType="VARCHAR" />
+    <result column="BANK_TRANS_DATE" property="bankTransDate" jdbcType="VARCHAR" />
+    <result column="BANK_TRANS_TIME" property="bankTransTime" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="CHAR" />
+    <result column="IS_AGREE_SHORTCUT" property="isAgreeShortcut" jdbcType="CHAR" />
+    <result column="PAY_GATEWAY" property="payGateway" jdbcType="VARCHAR" />
+    <result column="CREATE_TEIM" property="createTeim" jdbcType="VARCHAR" />
+    <result column="LAST_UPDATE_TIME" property="lastUpdateTime" jdbcType="VARCHAR" />
+    <result column="PAY_TYPE" property="payType" jdbcType="CHAR" />
+    <result column="BANK_ACCOUNT" property="bankAccount" jdbcType="VARCHAR" />
+    <result column="BANK_ACCOUNT_NAME" property="bankAccountName" jdbcType="VARCHAR" />
+    <result column="BANK_CODE" property="bankCode" jdbcType="VARCHAR" />
+    <result column="BANK_NAME" property="bankName" jdbcType="VARCHAR" />
+    <result column="ID_CARD" property="idCard" jdbcType="VARCHAR" />
+    <result column="MOBILE_PHONE" property="mobilePhone" jdbcType="VARCHAR" />
+    <result column="STORABLE_PAN" property="storablePan" jdbcType="VARCHAR" />
+    <result column="VALID_CODE" property="validCode" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ORDER_ID, UPS_TRANS_NUM, TRADE_AMOUNT, MERCHANT_CODE, MERCHANT_TRADE_CODE, PRODUCT_NAME, 
+    PRODUCT_DESC, MERCHANT_TRANS_DATE, MERCHANT_TRANS_TIME, MEMBER_ID, BG_URL, ACCOUNT_ID, 
+    UPS_TRANS_DATE, UPS_TRANS_TIME, RESP_CODE, CODE_MSG, BANK_TRANS_DATE, BANK_TRANS_TIME, 
+    STATUS, IS_AGREE_SHORTCUT, PAY_GATEWAY, CREATE_TEIM, LAST_UPDATE_TIME, PAY_TYPE, 
+    BANK_ACCOUNT, BANK_ACCOUNT_NAME, BANK_CODE, BANK_NAME, ID_CARD, MOBILE_PHONE, STORABLE_PAN, 
+    VALID_CODE
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="cn.memedai.ups.boss.dal.model.pay.OrderDOExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from UPS.TB_ORDER
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from UPS.TB_ORDER
+    where ORDER_ID = #{orderId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from UPS.TB_ORDER
+    where ORDER_ID = #{orderId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="cn.memedai.ups.boss.dal.model.pay.OrderDOExample" >
+    delete from UPS.TB_ORDER
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="cn.memedai.ups.boss.dal.model.pay.OrderDO" >
+    insert into UPS.TB_ORDER (ORDER_ID, UPS_TRANS_NUM, TRADE_AMOUNT, 
+      MERCHANT_CODE, MERCHANT_TRADE_CODE, PRODUCT_NAME, 
+      PRODUCT_DESC, MERCHANT_TRANS_DATE, MERCHANT_TRANS_TIME, 
+      MEMBER_ID, BG_URL, ACCOUNT_ID, 
+      UPS_TRANS_DATE, UPS_TRANS_TIME, RESP_CODE, 
+      CODE_MSG, BANK_TRANS_DATE, BANK_TRANS_TIME, 
+      STATUS, IS_AGREE_SHORTCUT, PAY_GATEWAY, 
+      CREATE_TEIM, LAST_UPDATE_TIME, PAY_TYPE, 
+      BANK_ACCOUNT, BANK_ACCOUNT_NAME, BANK_CODE, 
+      BANK_NAME, ID_CARD, MOBILE_PHONE, 
+      STORABLE_PAN, VALID_CODE)
+    values (#{orderId,jdbcType=BIGINT}, #{upsTransNum,jdbcType=VARCHAR}, #{tradeAmount,jdbcType=BIGINT}, 
+      #{merchantCode,jdbcType=CHAR}, #{merchantTradeCode,jdbcType=VARCHAR}, #{productName,jdbcType=VARCHAR}, 
+      #{productDesc,jdbcType=VARCHAR}, #{merchantTransDate,jdbcType=CHAR}, #{merchantTransTime,jdbcType=CHAR}, 
+      #{memberId,jdbcType=VARCHAR}, #{bgUrl,jdbcType=VARCHAR}, #{accountId,jdbcType=BIGINT}, 
+      #{upsTransDate,jdbcType=CHAR}, #{upsTransTime,jdbcType=CHAR}, #{respCode,jdbcType=VARCHAR}, 
+      #{codeMsg,jdbcType=VARCHAR}, #{bankTransDate,jdbcType=VARCHAR}, #{bankTransTime,jdbcType=VARCHAR}, 
+      #{status,jdbcType=CHAR}, #{isAgreeShortcut,jdbcType=CHAR}, #{payGateway,jdbcType=VARCHAR}, 
+      #{createTeim,jdbcType=VARCHAR}, #{lastUpdateTime,jdbcType=VARCHAR}, #{payType,jdbcType=CHAR}, 
+      #{bankAccount,jdbcType=VARCHAR}, #{bankAccountName,jdbcType=VARCHAR}, #{bankCode,jdbcType=VARCHAR}, 
+      #{bankName,jdbcType=VARCHAR}, #{idCard,jdbcType=VARCHAR}, #{mobilePhone,jdbcType=VARCHAR}, 
+      #{storablePan,jdbcType=VARCHAR}, #{validCode,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.memedai.ups.boss.dal.model.pay.OrderDO" >
+    insert into UPS.TB_ORDER
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="orderId != null" >
+        ORDER_ID,
+      </if>
+      <if test="upsTransNum != null" >
+        UPS_TRANS_NUM,
+      </if>
+      <if test="tradeAmount != null" >
+        TRADE_AMOUNT,
+      </if>
+      <if test="merchantCode != null" >
+        MERCHANT_CODE,
+      </if>
+      <if test="merchantTradeCode != null" >
+        MERCHANT_TRADE_CODE,
+      </if>
+      <if test="productName != null" >
+        PRODUCT_NAME,
+      </if>
+      <if test="productDesc != null" >
+        PRODUCT_DESC,
+      </if>
+      <if test="merchantTransDate != null" >
+        MERCHANT_TRANS_DATE,
+      </if>
+      <if test="merchantTransTime != null" >
+        MERCHANT_TRANS_TIME,
+      </if>
+      <if test="memberId != null" >
+        MEMBER_ID,
+      </if>
+      <if test="bgUrl != null" >
+        BG_URL,
+      </if>
+      <if test="accountId != null" >
+        ACCOUNT_ID,
+      </if>
+      <if test="upsTransDate != null" >
+        UPS_TRANS_DATE,
+      </if>
+      <if test="upsTransTime != null" >
+        UPS_TRANS_TIME,
+      </if>
+      <if test="respCode != null" >
+        RESP_CODE,
+      </if>
+      <if test="codeMsg != null" >
+        CODE_MSG,
+      </if>
+      <if test="bankTransDate != null" >
+        BANK_TRANS_DATE,
+      </if>
+      <if test="bankTransTime != null" >
+        BANK_TRANS_TIME,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="isAgreeShortcut != null" >
+        IS_AGREE_SHORTCUT,
+      </if>
+      <if test="payGateway != null" >
+        PAY_GATEWAY,
+      </if>
+      <if test="createTeim != null" >
+        CREATE_TEIM,
+      </if>
+      <if test="lastUpdateTime != null" >
+        LAST_UPDATE_TIME,
+      </if>
+      <if test="payType != null" >
+        PAY_TYPE,
+      </if>
+      <if test="bankAccount != null" >
+        BANK_ACCOUNT,
+      </if>
+      <if test="bankAccountName != null" >
+        BANK_ACCOUNT_NAME,
+      </if>
+      <if test="bankCode != null" >
+        BANK_CODE,
+      </if>
+      <if test="bankName != null" >
+        BANK_NAME,
+      </if>
+      <if test="idCard != null" >
+        ID_CARD,
+      </if>
+      <if test="mobilePhone != null" >
+        MOBILE_PHONE,
+      </if>
+      <if test="storablePan != null" >
+        STORABLE_PAN,
+      </if>
+      <if test="validCode != null" >
+        VALID_CODE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="orderId != null" >
+        #{orderId,jdbcType=BIGINT},
+      </if>
+      <if test="upsTransNum != null" >
+        #{upsTransNum,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeAmount != null" >
+        #{tradeAmount,jdbcType=BIGINT},
+      </if>
+      <if test="merchantCode != null" >
+        #{merchantCode,jdbcType=CHAR},
+      </if>
+      <if test="merchantTradeCode != null" >
+        #{merchantTradeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="productName != null" >
+        #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="productDesc != null" >
+        #{productDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantTransDate != null" >
+        #{merchantTransDate,jdbcType=CHAR},
+      </if>
+      <if test="merchantTransTime != null" >
+        #{merchantTransTime,jdbcType=CHAR},
+      </if>
+      <if test="memberId != null" >
+        #{memberId,jdbcType=VARCHAR},
+      </if>
+      <if test="bgUrl != null" >
+        #{bgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="accountId != null" >
+        #{accountId,jdbcType=BIGINT},
+      </if>
+      <if test="upsTransDate != null" >
+        #{upsTransDate,jdbcType=CHAR},
+      </if>
+      <if test="upsTransTime != null" >
+        #{upsTransTime,jdbcType=CHAR},
+      </if>
+      <if test="respCode != null" >
+        #{respCode,jdbcType=VARCHAR},
+      </if>
+      <if test="codeMsg != null" >
+        #{codeMsg,jdbcType=VARCHAR},
+      </if>
+      <if test="bankTransDate != null" >
+        #{bankTransDate,jdbcType=VARCHAR},
+      </if>
+      <if test="bankTransTime != null" >
+        #{bankTransTime,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=CHAR},
+      </if>
+      <if test="isAgreeShortcut != null" >
+        #{isAgreeShortcut,jdbcType=CHAR},
+      </if>
+      <if test="payGateway != null" >
+        #{payGateway,jdbcType=VARCHAR},
+      </if>
+      <if test="createTeim != null" >
+        #{createTeim,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdateTime != null" >
+        #{lastUpdateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="payType != null" >
+        #{payType,jdbcType=CHAR},
+      </if>
+      <if test="bankAccount != null" >
+        #{bankAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="bankAccountName != null" >
+        #{bankAccountName,jdbcType=VARCHAR},
+      </if>
+      <if test="bankCode != null" >
+        #{bankCode,jdbcType=VARCHAR},
+      </if>
+      <if test="bankName != null" >
+        #{bankName,jdbcType=VARCHAR},
+      </if>
+      <if test="idCard != null" >
+        #{idCard,jdbcType=VARCHAR},
+      </if>
+      <if test="mobilePhone != null" >
+        #{mobilePhone,jdbcType=VARCHAR},
+      </if>
+      <if test="storablePan != null" >
+        #{storablePan,jdbcType=VARCHAR},
+      </if>
+      <if test="validCode != null" >
+        #{validCode,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="cn.memedai.ups.boss.dal.model.pay.OrderDOExample" resultType="java.lang.Integer" >
+    select count(*) from UPS.TB_ORDER
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update UPS.TB_ORDER
+    <set >
+      <if test="record.orderId != null" >
+        ORDER_ID = #{record.orderId,jdbcType=BIGINT},
+      </if>
+      <if test="record.upsTransNum != null" >
+        UPS_TRANS_NUM = #{record.upsTransNum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tradeAmount != null" >
+        TRADE_AMOUNT = #{record.tradeAmount,jdbcType=BIGINT},
+      </if>
+      <if test="record.merchantCode != null" >
+        MERCHANT_CODE = #{record.merchantCode,jdbcType=CHAR},
+      </if>
+      <if test="record.merchantTradeCode != null" >
+        MERCHANT_TRADE_CODE = #{record.merchantTradeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productName != null" >
+        PRODUCT_NAME = #{record.productName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.productDesc != null" >
+        PRODUCT_DESC = #{record.productDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.merchantTransDate != null" >
+        MERCHANT_TRANS_DATE = #{record.merchantTransDate,jdbcType=CHAR},
+      </if>
+      <if test="record.merchantTransTime != null" >
+        MERCHANT_TRANS_TIME = #{record.merchantTransTime,jdbcType=CHAR},
+      </if>
+      <if test="record.memberId != null" >
+        MEMBER_ID = #{record.memberId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bgUrl != null" >
+        BG_URL = #{record.bgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.accountId != null" >
+        ACCOUNT_ID = #{record.accountId,jdbcType=BIGINT},
+      </if>
+      <if test="record.upsTransDate != null" >
+        UPS_TRANS_DATE = #{record.upsTransDate,jdbcType=CHAR},
+      </if>
+      <if test="record.upsTransTime != null" >
+        UPS_TRANS_TIME = #{record.upsTransTime,jdbcType=CHAR},
+      </if>
+      <if test="record.respCode != null" >
+        RESP_CODE = #{record.respCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.codeMsg != null" >
+        CODE_MSG = #{record.codeMsg,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bankTransDate != null" >
+        BANK_TRANS_DATE = #{record.bankTransDate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bankTransTime != null" >
+        BANK_TRANS_TIME = #{record.bankTransTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null" >
+        STATUS = #{record.status,jdbcType=CHAR},
+      </if>
+      <if test="record.isAgreeShortcut != null" >
+        IS_AGREE_SHORTCUT = #{record.isAgreeShortcut,jdbcType=CHAR},
+      </if>
+      <if test="record.payGateway != null" >
+        PAY_GATEWAY = #{record.payGateway,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTeim != null" >
+        CREATE_TEIM = #{record.createTeim,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lastUpdateTime != null" >
+        LAST_UPDATE_TIME = #{record.lastUpdateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.payType != null" >
+        PAY_TYPE = #{record.payType,jdbcType=CHAR},
+      </if>
+      <if test="record.bankAccount != null" >
+        BANK_ACCOUNT = #{record.bankAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bankAccountName != null" >
+        BANK_ACCOUNT_NAME = #{record.bankAccountName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bankCode != null" >
+        BANK_CODE = #{record.bankCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bankName != null" >
+        BANK_NAME = #{record.bankName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.idCard != null" >
+        ID_CARD = #{record.idCard,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mobilePhone != null" >
+        MOBILE_PHONE = #{record.mobilePhone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.storablePan != null" >
+        STORABLE_PAN = #{record.storablePan,jdbcType=VARCHAR},
+      </if>
+      <if test="record.validCode != null" >
+        VALID_CODE = #{record.validCode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update UPS.TB_ORDER
+    set ORDER_ID = #{record.orderId,jdbcType=BIGINT},
+      UPS_TRANS_NUM = #{record.upsTransNum,jdbcType=VARCHAR},
+      TRADE_AMOUNT = #{record.tradeAmount,jdbcType=BIGINT},
+      MERCHANT_CODE = #{record.merchantCode,jdbcType=CHAR},
+      MERCHANT_TRADE_CODE = #{record.merchantTradeCode,jdbcType=VARCHAR},
+      PRODUCT_NAME = #{record.productName,jdbcType=VARCHAR},
+      PRODUCT_DESC = #{record.productDesc,jdbcType=VARCHAR},
+      MERCHANT_TRANS_DATE = #{record.merchantTransDate,jdbcType=CHAR},
+      MERCHANT_TRANS_TIME = #{record.merchantTransTime,jdbcType=CHAR},
+      MEMBER_ID = #{record.memberId,jdbcType=VARCHAR},
+      BG_URL = #{record.bgUrl,jdbcType=VARCHAR},
+      ACCOUNT_ID = #{record.accountId,jdbcType=BIGINT},
+      UPS_TRANS_DATE = #{record.upsTransDate,jdbcType=CHAR},
+      UPS_TRANS_TIME = #{record.upsTransTime,jdbcType=CHAR},
+      RESP_CODE = #{record.respCode,jdbcType=VARCHAR},
+      CODE_MSG = #{record.codeMsg,jdbcType=VARCHAR},
+      BANK_TRANS_DATE = #{record.bankTransDate,jdbcType=VARCHAR},
+      BANK_TRANS_TIME = #{record.bankTransTime,jdbcType=VARCHAR},
+      STATUS = #{record.status,jdbcType=CHAR},
+      IS_AGREE_SHORTCUT = #{record.isAgreeShortcut,jdbcType=CHAR},
+      PAY_GATEWAY = #{record.payGateway,jdbcType=VARCHAR},
+      CREATE_TEIM = #{record.createTeim,jdbcType=VARCHAR},
+      LAST_UPDATE_TIME = #{record.lastUpdateTime,jdbcType=VARCHAR},
+      PAY_TYPE = #{record.payType,jdbcType=CHAR},
+      BANK_ACCOUNT = #{record.bankAccount,jdbcType=VARCHAR},
+      BANK_ACCOUNT_NAME = #{record.bankAccountName,jdbcType=VARCHAR},
+      BANK_CODE = #{record.bankCode,jdbcType=VARCHAR},
+      BANK_NAME = #{record.bankName,jdbcType=VARCHAR},
+      ID_CARD = #{record.idCard,jdbcType=VARCHAR},
+      MOBILE_PHONE = #{record.mobilePhone,jdbcType=VARCHAR},
+      STORABLE_PAN = #{record.storablePan,jdbcType=VARCHAR},
+      VALID_CODE = #{record.validCode,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.memedai.ups.boss.dal.model.pay.OrderDO" >
+    update UPS.TB_ORDER
+    <set >
+      <if test="upsTransNum != null" >
+        UPS_TRANS_NUM = #{upsTransNum,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeAmount != null" >
+        TRADE_AMOUNT = #{tradeAmount,jdbcType=BIGINT},
+      </if>
+      <if test="merchantCode != null" >
+        MERCHANT_CODE = #{merchantCode,jdbcType=CHAR},
+      </if>
+      <if test="merchantTradeCode != null" >
+        MERCHANT_TRADE_CODE = #{merchantTradeCode,jdbcType=VARCHAR},
+      </if>
+      <if test="productName != null" >
+        PRODUCT_NAME = #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="productDesc != null" >
+        PRODUCT_DESC = #{productDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantTransDate != null" >
+        MERCHANT_TRANS_DATE = #{merchantTransDate,jdbcType=CHAR},
+      </if>
+      <if test="merchantTransTime != null" >
+        MERCHANT_TRANS_TIME = #{merchantTransTime,jdbcType=CHAR},
+      </if>
+      <if test="memberId != null" >
+        MEMBER_ID = #{memberId,jdbcType=VARCHAR},
+      </if>
+      <if test="bgUrl != null" >
+        BG_URL = #{bgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="accountId != null" >
+        ACCOUNT_ID = #{accountId,jdbcType=BIGINT},
+      </if>
+      <if test="upsTransDate != null" >
+        UPS_TRANS_DATE = #{upsTransDate,jdbcType=CHAR},
+      </if>
+      <if test="upsTransTime != null" >
+        UPS_TRANS_TIME = #{upsTransTime,jdbcType=CHAR},
+      </if>
+      <if test="respCode != null" >
+        RESP_CODE = #{respCode,jdbcType=VARCHAR},
+      </if>
+      <if test="codeMsg != null" >
+        CODE_MSG = #{codeMsg,jdbcType=VARCHAR},
+      </if>
+      <if test="bankTransDate != null" >
+        BANK_TRANS_DATE = #{bankTransDate,jdbcType=VARCHAR},
+      </if>
+      <if test="bankTransTime != null" >
+        BANK_TRANS_TIME = #{bankTransTime,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=CHAR},
+      </if>
+      <if test="isAgreeShortcut != null" >
+        IS_AGREE_SHORTCUT = #{isAgreeShortcut,jdbcType=CHAR},
+      </if>
+      <if test="payGateway != null" >
+        PAY_GATEWAY = #{payGateway,jdbcType=VARCHAR},
+      </if>
+      <if test="createTeim != null" >
+        CREATE_TEIM = #{createTeim,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdateTime != null" >
+        LAST_UPDATE_TIME = #{lastUpdateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="payType != null" >
+        PAY_TYPE = #{payType,jdbcType=CHAR},
+      </if>
+      <if test="bankAccount != null" >
+        BANK_ACCOUNT = #{bankAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="bankAccountName != null" >
+        BANK_ACCOUNT_NAME = #{bankAccountName,jdbcType=VARCHAR},
+      </if>
+      <if test="bankCode != null" >
+        BANK_CODE = #{bankCode,jdbcType=VARCHAR},
+      </if>
+      <if test="bankName != null" >
+        BANK_NAME = #{bankName,jdbcType=VARCHAR},
+      </if>
+      <if test="idCard != null" >
+        ID_CARD = #{idCard,jdbcType=VARCHAR},
+      </if>
+      <if test="mobilePhone != null" >
+        MOBILE_PHONE = #{mobilePhone,jdbcType=VARCHAR},
+      </if>
+      <if test="storablePan != null" >
+        STORABLE_PAN = #{storablePan,jdbcType=VARCHAR},
+      </if>
+      <if test="validCode != null" >
+        VALID_CODE = #{validCode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ORDER_ID = #{orderId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.memedai.ups.boss.dal.model.pay.OrderDO" >
+    update UPS.TB_ORDER
+    set UPS_TRANS_NUM = #{upsTransNum,jdbcType=VARCHAR},
+      TRADE_AMOUNT = #{tradeAmount,jdbcType=BIGINT},
+      MERCHANT_CODE = #{merchantCode,jdbcType=CHAR},
+      MERCHANT_TRADE_CODE = #{merchantTradeCode,jdbcType=VARCHAR},
+      PRODUCT_NAME = #{productName,jdbcType=VARCHAR},
+      PRODUCT_DESC = #{productDesc,jdbcType=VARCHAR},
+      MERCHANT_TRANS_DATE = #{merchantTransDate,jdbcType=CHAR},
+      MERCHANT_TRANS_TIME = #{merchantTransTime,jdbcType=CHAR},
+      MEMBER_ID = #{memberId,jdbcType=VARCHAR},
+      BG_URL = #{bgUrl,jdbcType=VARCHAR},
+      ACCOUNT_ID = #{accountId,jdbcType=BIGINT},
+      UPS_TRANS_DATE = #{upsTransDate,jdbcType=CHAR},
+      UPS_TRANS_TIME = #{upsTransTime,jdbcType=CHAR},
+      RESP_CODE = #{respCode,jdbcType=VARCHAR},
+      CODE_MSG = #{codeMsg,jdbcType=VARCHAR},
+      BANK_TRANS_DATE = #{bankTransDate,jdbcType=VARCHAR},
+      BANK_TRANS_TIME = #{bankTransTime,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=CHAR},
+      IS_AGREE_SHORTCUT = #{isAgreeShortcut,jdbcType=CHAR},
+      PAY_GATEWAY = #{payGateway,jdbcType=VARCHAR},
+      CREATE_TEIM = #{createTeim,jdbcType=VARCHAR},
+      LAST_UPDATE_TIME = #{lastUpdateTime,jdbcType=VARCHAR},
+      PAY_TYPE = #{payType,jdbcType=CHAR},
+      BANK_ACCOUNT = #{bankAccount,jdbcType=VARCHAR},
+      BANK_ACCOUNT_NAME = #{bankAccountName,jdbcType=VARCHAR},
+      BANK_CODE = #{bankCode,jdbcType=VARCHAR},
+      BANK_NAME = #{bankName,jdbcType=VARCHAR},
+      ID_CARD = #{idCard,jdbcType=VARCHAR},
+      MOBILE_PHONE = #{mobilePhone,jdbcType=VARCHAR},
+      STORABLE_PAN = #{storablePan,jdbcType=VARCHAR},
+      VALID_CODE = #{validCode,jdbcType=VARCHAR}
+    where ORDER_ID = #{orderId,jdbcType=BIGINT}
+  </update>
+</mapper>

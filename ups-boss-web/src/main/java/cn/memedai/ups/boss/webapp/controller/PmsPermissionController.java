@@ -21,15 +21,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import cn.memedai.ups.boss.constants.PermissionConstant;
-import cn.memedai.ups.boss.dal.model.PmsActionDO;
-import cn.memedai.ups.boss.dal.model.PmsActionDOExample;
-import cn.memedai.ups.boss.dal.model.PmsActionDOExample.Criteria;
-import cn.memedai.ups.boss.dal.model.PmsMenuDO;
-import cn.memedai.ups.boss.dal.model.PmsOperatorDO;
-import cn.memedai.ups.boss.dal.model.PmsOperatorDOExample;
-import cn.memedai.ups.boss.dal.model.PmsRoleDO;
-import cn.memedai.ups.boss.dal.model.PmsRoleDOExample;
-import cn.memedai.ups.boss.dal.model.PmsRoleOperatorDO;
+import cn.memedai.ups.boss.dal.model.pms.PmsActionDO;
+import cn.memedai.ups.boss.dal.model.pms.PmsActionDOExample;
+import cn.memedai.ups.boss.dal.model.pms.PmsMenuDO;
+import cn.memedai.ups.boss.dal.model.pms.PmsOperatorDO;
+import cn.memedai.ups.boss.dal.model.pms.PmsOperatorDOExample;
+import cn.memedai.ups.boss.dal.model.pms.PmsRoleDO;
+import cn.memedai.ups.boss.dal.model.pms.PmsRoleDOExample;
+import cn.memedai.ups.boss.dal.model.pms.PmsRoleOperatorDO;
+import cn.memedai.ups.boss.dal.model.pms.PmsActionDOExample.Criteria;
 import cn.memedai.ups.boss.enums.OperatorStatusEnum;
 import cn.memedai.ups.boss.enums.OperatorTypeEnum;
 import cn.memedai.ups.boss.enums.RoleTypeEnum;
@@ -340,7 +340,7 @@ public class PmsPermissionController extends PermissionBase {
 			//paramMap.put("roleName", getString("roleName")); // 角色名称（模糊查询）
 			String roleName = getString("roleName");//角色名称（模糊查询）
 			PmsRoleDOExample example = new PmsRoleDOExample();
-			cn.memedai.ups.boss.dal.model.PmsRoleDOExample.Criteria criteria = example.createCriteria();
+			cn.memedai.ups.boss.dal.model.pms.PmsRoleDOExample.Criteria criteria = example.createCriteria();
 			if(StringUtils.isNoneBlank(roleName)){
 				criteria.andRolenameLike(roleName);
 			}
@@ -760,7 +760,7 @@ public class PmsPermissionController extends PermissionBase {
 			paramMap.put("status", status);
 			
 			PmsOperatorDOExample example = new PmsOperatorDOExample();
-			cn.memedai.ups.boss.dal.model.PmsOperatorDOExample.Criteria criteria = example.createCriteria();
+			cn.memedai.ups.boss.dal.model.pms.PmsOperatorDOExample.Criteria criteria = example.createCriteria();
 			if(StringUtils.isNotBlank(loginName)){
 				criteria.andLoginnameEqualTo(loginName);
 			}

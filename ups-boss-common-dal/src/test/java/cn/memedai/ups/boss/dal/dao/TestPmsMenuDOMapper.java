@@ -6,9 +6,10 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import cn.memedai.ups.boss.dal.dao.common.BaseTest;
-import cn.memedai.ups.boss.dal.model.PmsActionDO;
-import cn.memedai.ups.boss.dal.model.PmsActionDOExample;
-import cn.memedai.ups.boss.dal.model.PmsMenuDO;
+import cn.memedai.ups.boss.dal.dao.pms.PmsMenuDOMapper;
+import cn.memedai.ups.boss.dal.model.pms.PmsActionDO;
+import cn.memedai.ups.boss.dal.model.pms.PmsActionDOExample;
+import cn.memedai.ups.boss.dal.model.pms.PmsMenuDO;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;

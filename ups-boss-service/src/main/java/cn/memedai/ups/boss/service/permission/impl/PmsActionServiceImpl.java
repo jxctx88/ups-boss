@@ -12,12 +12,12 @@ import org.springframework.stereotype.Service;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
-import cn.memedai.ups.boss.dal.dao.PmsActionDOMapper;
-import cn.memedai.ups.boss.dal.dao.PmsMenuDOMapper;
-import cn.memedai.ups.boss.dal.model.PmsActionDO;
-import cn.memedai.ups.boss.dal.model.PmsActionDOExample;
-import cn.memedai.ups.boss.dal.model.PmsMenuDO;
-import cn.memedai.ups.boss.dal.model.PmsRoleActionDO;
+import cn.memedai.ups.boss.dal.dao.pms.PmsActionDOMapper;
+import cn.memedai.ups.boss.dal.dao.pms.PmsMenuDOMapper;
+import cn.memedai.ups.boss.dal.model.pms.PmsActionDO;
+import cn.memedai.ups.boss.dal.model.pms.PmsActionDOExample;
+import cn.memedai.ups.boss.dal.model.pms.PmsMenuDO;
+import cn.memedai.ups.boss.dal.model.pms.PmsRoleActionDO;
 import cn.memedai.ups.boss.service.page.PageParam;
 import cn.memedai.ups.boss.service.permission.PmsActionService;
 import cn.memedai.ups.boss.service.permission.PmsRoleActionService;

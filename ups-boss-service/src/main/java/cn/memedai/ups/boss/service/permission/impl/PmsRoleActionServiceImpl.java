@@ -7,9 +7,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import cn.memedai.ups.boss.dal.dao.PmsRoleActionDOMapper;
-import cn.memedai.ups.boss.dal.model.PmsRoleActionDO;
-import cn.memedai.ups.boss.dal.model.PmsRoleActionDOExample;
+import cn.memedai.ups.boss.dal.dao.pms.PmsRoleActionDOMapper;
+import cn.memedai.ups.boss.dal.model.pms.PmsRoleActionDO;
+import cn.memedai.ups.boss.dal.model.pms.PmsRoleActionDOExample;
 import cn.memedai.ups.boss.service.permission.PmsRoleActionService;
 
 @Service("pmsRoleActionService")

@@ -4,9 +4,9 @@ import java.util.List;
 
 import com.github.pagehelper.PageInfo;
 
-import cn.memedai.ups.boss.dal.model.PmsOperatorDO;
-import cn.memedai.ups.boss.dal.model.PmsOperatorDOExample;
-import cn.memedai.ups.boss.dal.model.PmsRoleOperatorDO;
+import cn.memedai.ups.boss.dal.model.pms.PmsOperatorDO;
+import cn.memedai.ups.boss.dal.model.pms.PmsOperatorDOExample;
+import cn.memedai.ups.boss.dal.model.pms.PmsRoleOperatorDO;
 import cn.memedai.ups.boss.service.page.PageParam;
 
 

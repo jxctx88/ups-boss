@@ -3,8 +3,8 @@ package cn.memedai.ups.boss.dal.dao.common;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import cn.memedai.ups.boss.dal.dao.PmsActionDOMapper;
-import cn.memedai.ups.boss.dal.model.PmsActionDO;
+import cn.memedai.ups.boss.dal.dao.pms.PmsActionDOMapper;
+import cn.memedai.ups.boss.dal.model.pms.PmsActionDO;
 
 public class TestPmsActionDOMapper extends BaseTest {
 

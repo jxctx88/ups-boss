@@ -4,8 +4,8 @@ import java.util.List;
 
 import com.github.pagehelper.PageInfo;
 
-import cn.memedai.ups.boss.dal.model.PmsActionDO;
-import cn.memedai.ups.boss.dal.model.PmsActionDOExample;
+import cn.memedai.ups.boss.dal.model.pms.PmsActionDO;
+import cn.memedai.ups.boss.dal.model.pms.PmsActionDOExample;
 import cn.memedai.ups.boss.service.page.PageParam;
 
 /**
