@@ -143,4 +143,61 @@ public final class StrUtil {
 		}
 		return htmlStr; // 返回文本字符串
 	}
+	
+	/**
+	 * 格式化手机号
+	 * 如：186****0793
+	 * @param phone
+	 * @return
+	 */
+	public static String foramtPhone(String phone){
+		if(StringUtils.isNotBlank(phone)){
+			return phone.replaceAll("(\\d{3})\\d{4}(\\d{4})","$1****$2");
+		}
+		return "";
+	}
+	
+	/**
+	 * 格式化身份证号
+	 * 如：3585498***2324
+	 * @param idCard
+	 * @return
+	 */
+	public static String foramtIDCard(String idCard){
+		if(StringUtils.isNotBlank(idCard)){
+			return idCard.substring(0, 6)+"***"+idCard.substring(idCard.length()-4,idCard.length());
+		}
+		return "";
+	}
+	
+	/**
+	 * 格式化银行卡号
+	 * 如：856246***3435
+	 * @param bankAccount
+	 * @return
+	 */
+	public static String foramtBankAccount(String bankAccount){
+		if(StringUtils.isNotBlank(bankAccount)){
+			return bankAccount.substring(0, 6)+"***"+bankAccount.substring(bankAccount.length()-4,bankAccount.length());
+		}
+		return "";
+	}
+	
+	/**
+	 * 格式化银行卡户名
+	 * 如： 王*、王*不
+	 * @param bankAccountName
+	 * @return
+	 */
+	public static String foramtBankAcountName(String bankAccountName){
+		if(StringUtils.isNotBlank(bankAccountName)){
+			if(bankAccountName.length() == 2){
+				return bankAccountName.substring(0,1)+"*";
+			}else{
+				return bankAccountName.substring(0,1)+"*"+bankAccountName.substring(bankAccountName.length()-1, bankAccountName.length());
+			}
+		}
+		return "";
+	}
+	
 }

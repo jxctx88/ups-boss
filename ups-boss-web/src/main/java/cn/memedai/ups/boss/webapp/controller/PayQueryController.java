@@ -1,6 +1,8 @@
 package cn.memedai.ups.boss.webapp.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,10 +16,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import cn.memedai.ups.boss.dal.model.pay.BankLimitDO;
 import cn.memedai.ups.boss.dal.model.pay.OrderDO;
 import cn.memedai.ups.boss.service.pay.BankLimitService;
 import cn.memedai.ups.boss.service.pay.OrderService;
+import cn.memedai.ups.boss.utils.StrUtil;
 import cn.memedai.ups.boss.webapp.base.PermissionBase;
 
 import com.github.pagehelper.PageInfo;
@@ -51,69 +53,78 @@ public class PayQueryController extends PermissionBase {
 		Map<String, Object> paramMap = new HashMap<String, Object>(); // 业务条件查询参数
 		
 		OrderDO orderDO = new OrderDO();
-		String upsTransNum = request.getParameter("upsTransNum"); //
+		String upsTransNum = request.getParameter("upsTransNum");
 		if (StringUtils.isNotBlank(upsTransNum)) {
 			paramMap.put("upsTransNum", upsTransNum);
 			orderDO.setUpsTransNum(upsTransNum);
 		}
 		
-		String merchantCode = request.getParameter("merchantCode"); //
+		String merchantCode = request.getParameter("merchantCode");
 		if (StringUtils.isNotBlank(merchantCode)) {
 			paramMap.put("merchantCode", merchantCode);
 			orderDO.setMerchantCode(merchantCode);
 		}
 		
-		String merchantTradeCode = request.getParameter("merchantTradeCode"); //
+		String merchantTradeCode = request.getParameter("merchantTradeCode");
 		if (StringUtils.isNotBlank(merchantTradeCode)) {
 			paramMap.put("merchantTradeCode", merchantTradeCode);
 			orderDO.setMerchantTradeCode(merchantTradeCode);
 		}
 		
-		String bankAccount = request.getParameter("bankAccount"); //
+		String bankAccount = request.getParameter("bankAccount");
 		if (StringUtils.isNotBlank(bankAccount)) {
 			paramMap.put("bankAccount", bankAccount);
 			orderDO.setBankAccount(bankAccount);
 		}
 		
-		String bankAccountName = request.getParameter("bankAccountName"); //
+		String bankAccountName = request.getParameter("bankAccountName");
 		if (StringUtils.isNotBlank(bankAccountName)) {
 			paramMap.put("bankAccountName", bankAccountName);
 			orderDO.setBankAccountName(bankAccountName);
 		}
 		
-		String idCard = request.getParameter("idCard"); //
+		String idCard = request.getParameter("idCard");
 		if (StringUtils.isNotBlank(idCard)) {
 			paramMap.put("idCard", idCard);
 			orderDO.setIdCard(idCard);
 		}
 		
-		String mobilePhone = request.getParameter("mobilePhone"); //
+		String mobilePhone = request.getParameter("mobilePhone");
 		if (StringUtils.isNotBlank(mobilePhone)) {
 			paramMap.put("mobilePhone", mobilePhone);
 			orderDO.setMobilePhone(mobilePhone);
 		}
 		
-		String payGateway = request.getParameter("payGateway"); //
+		String payGateway = request.getParameter("payGateway");
 		if (StringUtils.isNotBlank(payGateway)) {
 			paramMap.put("payGateway", payGateway);
 			orderDO.setPayGateway(payGateway);
 		}
 		
-		String payType = request.getParameter("payType"); //
-		if (StringUtils.isNotBlank(payGateway)) {
+		String payType = request.getParameter("payType");
+		if (StringUtils.isNotBlank(payType)) {
 			paramMap.put("payType", payType);
 			orderDO.setPayType(payType);
 		}
 		
-		String status = request.getParameter("status"); //
+		String status = request.getParameter("status");
 		if (StringUtils.isNotBlank(status)) {
 			paramMap.put("status", status);
 			orderDO.setStatus(status);
 		}
 
 		PageInfo<OrderDO> pageInfo = orderService.listPage(getPageParam(),orderDO);
-//		BankLimitDO bankLimitDO = new BankLimitDO();
-//		PageInfo<BankLimitDO> pageInfo = bankLimitService.listPage(getPageParam(), bankLimitDO);
+		List<OrderDO> orderDOList = pageInfo.getList();
+		List<OrderDO> list = new ArrayList<OrderDO>();
+		//隐藏敏感信息
+		for(OrderDO oneOrderDO : orderDOList){
+			oneOrderDO.setMobilePhone(StrUtil.foramtPhone(oneOrderDO.getMobilePhone()));
+			oneOrderDO.setIdCard(StrUtil.foramtIDCard(oneOrderDO.getIdCard()));
+			oneOrderDO.setBankAccount(StrUtil.foramtBankAccount(oneOrderDO.getBankAccount()));
+			oneOrderDO.setBankAccountName(StrUtil.foramtBankAcountName(oneOrderDO.getBankAccountName()));
+			list.add(oneOrderDO);
+		}
+		pageInfo.setList(list);
 		mov.addObject("paramMap", paramMap);
 		mov.addObject("pageInfo", pageInfo);
 		return mov;
