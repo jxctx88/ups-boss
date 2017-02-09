@@ -112,10 +112,19 @@ public class PmsActionServiceImpl implements PmsActionService {
 
 	@Override
 	public PmsActionDO getActionAndMenuById(Long id) {
-		PmsActionDO pmsActionDO =  pmsActionDOMapper.selectByPrimaryKey(id);
-		PmsMenuDO pmsMenuDO = pmsMenuDOMapper.selectByPrimaryKey(pmsActionDO.getMenuid());
+		PmsActionDO	pmsActionDO = new PmsActionDO();
+		pmsActionDO.setId(id);
+		List<PmsActionDO> pmsActionDOList =  pmsActionDOMapper.listByExample(pmsActionDO);
+		if(CollectionUtils.isNotEmpty(pmsActionDOList)){
+			return pmsActionDOList.get(0);
+		}else{
+			return new PmsActionDO();
+		}
+		//PmsActionDO pmsActionDO =  pmsActionDOMapper.selectByPrimaryKey(id);
+		//PmsMenuDO pmsMenuDO = pmsMenuDOMapper.selectByPrimaryKey(pmsActionDO.getMenuid());
 		//pmsActionDO.setMenu(pmsMenuDO);
-		return pmsActionDO;
+		//pmsActionDO.setMenuName(pmsMenuDO.getName());
+		
 	}
 	
 	@Override

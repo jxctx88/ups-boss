@@ -678,7 +678,7 @@
 				<jdbc.username>root</jdbc.username>
 				<jdbc.password>root</jdbc.password>
 				<ex.sourceType>jndi</ex.sourceType>
-				<jndi.dataSource>java:comp/env/jndi/UPSDS</jndi.dataSource>
+				<jndi.dataSource>java:comp/env/jndi/ups_boss_ds</jndi.dataSource>
 				<env>dev</env>
 			</properties>
 		</profile>
@@ -687,7 +687,7 @@
 			<id>test</id>
 			<properties>
 				<ex.sourceType>jdbc</ex.sourceType>
-				<jndi.dataSource>java:comp/env/jndi/UPSDS</jndi.dataSource>
+				<jndi.dataSource>java:comp/env/jndi/ups_boss_ds</jndi.dataSource>
 				<env>test</env>
 			</properties>
 		</profile>
@@ -696,7 +696,7 @@
 			<id>prod</id>
 			<properties>
 				<ex.sourceType>jdbc</ex.sourceType>
-				<jndi.dataSource>java:comp/env/jndi/UPSDS</jndi.dataSource>
+				<jndi.dataSource>java:comp/env/jndi/ups_boss_ds</jndi.dataSource>
 				<env>prod</env>
 			</properties>
 		</profile>

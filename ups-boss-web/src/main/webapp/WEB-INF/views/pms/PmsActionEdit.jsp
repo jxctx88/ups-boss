@@ -24,7 +24,7 @@
 			</p>
 			<p>
 				<label>关联菜单：</label>
-				<input type="text" value="${pmsActionDO.menu.name}" class="required" readonly="true" >
+				<input type="text" value="${pmsActionDO.menuName}" class="required" readonly="true" >
 			</p>
 		</div>
 		<div class="formBar">

@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import cn.memedai.ups.boss.dal.model.pay.BankLimitDO;
 import cn.memedai.ups.boss.dal.model.pay.OrderDO;
+import cn.memedai.ups.boss.service.pay.BankLimitService;
 import cn.memedai.ups.boss.service.pay.OrderService;
 import cn.memedai.ups.boss.webapp.base.PermissionBase;
 
@@ -32,6 +34,9 @@ public class PayQueryController extends PermissionBase {
 	
 	@Autowired
 	private OrderService orderService;
+	
+	@Autowired
+	private BankLimitService bankLimitService;
 	
 
 	/**
@@ -107,6 +112,8 @@ public class PayQueryController extends PermissionBase {
 		}
 
 		PageInfo<OrderDO> pageInfo = orderService.listPage(getPageParam(),orderDO);
+//		BankLimitDO bankLimitDO = new BankLimitDO();
+//		PageInfo<BankLimitDO> pageInfo = bankLimitService.listPage(getPageParam(), bankLimitDO);
 		mov.addObject("paramMap", paramMap);
 		mov.addObject("pageInfo", pageInfo);
 		return mov;

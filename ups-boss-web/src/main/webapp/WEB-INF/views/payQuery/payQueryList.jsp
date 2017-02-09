@@ -63,8 +63,6 @@
 						<option value="60" <c:if test="${paramMap.status ne null and paramMap.status eq '60'}">selected="selected"</c:if>>交易异常</option>
 					</select>
 				</td>
-			</tr>
-			<tr>
 				<td>
 					<div class="subBar">
 						<ul>
