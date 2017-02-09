@@ -12,6 +12,7 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import cn.memedai.ups.boss.constants.GlobalConstant;
 import cn.memedai.ups.boss.constants.PermissionConstant;
 import cn.memedai.ups.boss.dal.dao.pms.PmsMenuDOMapper;
 import cn.memedai.ups.boss.dal.dao.pms.PmsRoleActionDOMapper;
@@ -454,9 +455,14 @@ public class PmsMenuServiceImpl implements PmsMenuService {
 
 	@Override
 	public String buildOperatorPermissionMenu(long operatorId) throws PermissionException {
-		
-		List<PmsMenuDO> treeData = pmsMenuDOMapper.listMenuByOperatorId(operatorId);
-		
+		List<PmsMenuDO> treeData = new ArrayList<PmsMenuDO>();
+		if(GlobalConstant.ADMON_OPERATOR_ID == operatorId){
+			//超级管理员，获取所有菜单
+			PmsMenuDOExample example = new PmsMenuDOExample();
+			treeData = pmsMenuDOMapper.selectByExample(example);
+		}else{
+			treeData = pmsMenuDOMapper.listMenuByOperatorId(operatorId);
+		}
 		if (CollectionUtils.isEmpty(treeData)) {
 			log.error("用户没有分配菜单权限");
 			throw new PermissionException(PermissionException.PERMISSION_USER_NOT_MENU); // 该用户没有分配菜单权限

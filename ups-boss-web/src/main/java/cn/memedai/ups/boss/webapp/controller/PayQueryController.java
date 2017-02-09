@@ -31,24 +31,20 @@ import com.github.pagehelper.PageInfo;
  */
 @Slf4j
 @Controller
-@RequestMapping("/payQuery")
+@RequestMapping("/pay/order")
 public class PayQueryController extends PermissionBase {
 	
 	@Autowired
 	private OrderService orderService;
 	
-	@Autowired
-	private BankLimitService bankLimitService;
-	
-
 	/**
 	 * 进入订单查询页面.
 	 * @return
 	 */
-	@RequestMapping("/listPayQuery")
+	@RequestMapping("/listOrder")
 	@ResponseBody
 	public Object listPayChannel(HttpServletRequest request) {
-		ModelAndView mov = new ModelAndView("/payQuery/payQueryList");
+		ModelAndView mov = new ModelAndView("/pay/order/orderList");
 		
 		Map<String, Object> paramMap = new HashMap<String, Object>(); // 业务条件查询参数
 		
@@ -128,6 +124,18 @@ public class PayQueryController extends PermissionBase {
 		mov.addObject("paramMap", paramMap);
 		mov.addObject("pageInfo", pageInfo);
 		return mov;
+	}
+	
+	/**
+	 * 跳转到订单修改页面
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("/editOrderUI")
+	@ResponseBody
+	public Object editOrderUI(HttpServletRequest request) {
+		String orderId = request.getParameter("orderId");
+		return null;
 	}
 
 }

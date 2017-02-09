@@ -43,6 +43,7 @@ public class PmsRoleActionServiceImpl implements PmsRoleActionService {
 	public List<PmsRoleActionDO> listByRoleIds(String roleIdsStr) {
 		List<String> roledIds = Arrays.asList(roleIdsStr.split(","));
 		List<Long> roleIdList = new ArrayList<Long>();
+		
 		for(String id : roledIds){
 			roleIdList.add(Long.parseLong(id));
 		}

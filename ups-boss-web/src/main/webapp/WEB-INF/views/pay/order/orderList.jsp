@@ -3,7 +3,7 @@
 
 <script type="text/javascript" src="${rc.contextPath}/js/common.js"></script>
 <div class="pageHeader">
-	<form id="pagerForm" onsubmit="return navTabSearch(this);" action="${rc.contextPath}/payQuery/listPayQuery" method="post">
+	<form id="pagerForm" onsubmit="return navTabSearch(this);" action="${rc.contextPath}/pay/order/listOrder" method="post">
 	<!-- 分页表单参数 -->
     <%@include file="/WEB-INF/views/inc/pageForm.jsp"%>
 	<div class="searchBar">
@@ -77,7 +77,9 @@
 				<td>
 					<div class="subBar">
 						<ul>
+							<z:permission value="pms:action:edit">
 							<li><div class="buttonActive"><div class="buttonContent"><button type="submit">查询</button></div></div></li>
+							</z:permission>
 							<li><div class="buttonActive"><div class="buttonContent"><button type="button"  onclick="clearFormOperatorLogList()">清空条件</button></div></div></li>
 						</ul>
 					</div>
@@ -106,6 +108,7 @@
 				<th>支付方式</th>
 				<th>创建时间</th>
 				<th>最后修改时间</th>
+				<th>操作</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -152,7 +155,13 @@
 					</td>
 					<td>${orderDO.createTeim}</td>
 					<td>${orderDO.lastUpdateTime}</td>
+					<td>
+						<z:permission value="pay:order:edit">
+							[<a href="${rc.contextPath}/pay/order/editOrderUI?orderId=${orderDO.orderId}" title="修改订单" target="dialog" width="550" height="300" rel="input"  style="color:blue">修改</a>]
+						</z:permission>
+					</td>
 				</tr>
+				
 			</c:forEach>
 		</tbody>
 	</table>

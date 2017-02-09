@@ -9,18 +9,18 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
-
+import cn.memedai.ups.boss.constants.GlobalConstant;
 import cn.memedai.ups.boss.dal.dao.pms.PmsActionDOMapper;
 import cn.memedai.ups.boss.dal.dao.pms.PmsMenuDOMapper;
 import cn.memedai.ups.boss.dal.model.pms.PmsActionDO;
 import cn.memedai.ups.boss.dal.model.pms.PmsActionDOExample;
-import cn.memedai.ups.boss.dal.model.pms.PmsMenuDO;
 import cn.memedai.ups.boss.dal.model.pms.PmsRoleActionDO;
 import cn.memedai.ups.boss.service.page.PageParam;
 import cn.memedai.ups.boss.service.permission.PmsActionService;
 import cn.memedai.ups.boss.service.permission.PmsRoleActionService;
+
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 
 @Service("pmsActionService")
 public class PmsActionServiceImpl implements PmsActionService {
@@ -168,20 +168,40 @@ public class PmsActionServiceImpl implements PmsActionService {
 
 	@Override
 	public String getActionIdsByRoleIds(String roleIds) {
-		// 得到角色－权限表中roleiId在ids中的所有关联对象
-		List<PmsRoleActionDO> listPmsRoleActions = pmsRoleActionService.listByRoleIds(roleIds);
-		// 构建StringBuffer
-		StringBuffer actionIdsBuf = new StringBuffer("");
-		// 拼接字符串
-		for (PmsRoleActionDO pmsRoleAction : listPmsRoleActions) {
-			actionIdsBuf.append(pmsRoleAction.getActionid()).append(",");
+		List<String> roledIds = Arrays.asList(roleIds.split(","));
+		if(roledIds.contains(GlobalConstant.ADMON_ROLE_ID)){
+			//超级管理员获取所有的权限
+			PmsActionDOExample example = new PmsActionDOExample();
+			List<PmsActionDO> pmsActionDOList = pmsActionDOMapper.selectByExample(example);
+			// 构建StringBuffer
+			StringBuffer actionIdsBuf = new StringBuffer("");
+			// 拼接字符串
+			for (PmsActionDO pmsActionDO : pmsActionDOList) {
+				actionIdsBuf.append(pmsActionDO.getId()).append(",");
+			}
+			String actionIds = actionIdsBuf.toString();
+			// 截取字符串
+			if (StringUtils.isNotBlank(actionIds) && actionIds.length() > 0) {
+				actionIds = actionIds.substring(0, actionIds.length() - 1); // 去掉最后一个逗号
+			}
+			return actionIds;
+		}else{
+			//不是超级管理员
+			// 得到角色－权限表中roleiId在ids中的所有关联对象
+			List<PmsRoleActionDO> listPmsRoleActions = pmsRoleActionService.listByRoleIds(roleIds);
+			// 构建StringBuffer
+			StringBuffer actionIdsBuf = new StringBuffer("");
+			// 拼接字符串
+			for (PmsRoleActionDO pmsRoleAction : listPmsRoleActions) {
+				actionIdsBuf.append(pmsRoleAction.getActionid()).append(",");
+			}
+			String actionIds = actionIdsBuf.toString();
+			// 截取字符串
+			if (StringUtils.isNotBlank(actionIds) && actionIds.length() > 0) {
+				actionIds = actionIds.substring(0, actionIds.length() - 1); // 去掉最后一个逗号
+			}
+			return actionIds;
 		}
-		String actionIds = actionIdsBuf.toString();
-		// 截取字符串
-		if (StringUtils.isNotBlank(actionIds) && actionIds.length() > 0) {
-			actionIds = actionIds.substring(0, actionIds.length() - 1); // 去掉最后一个逗号
-		}
-		return actionIds;
 	}
 
 }

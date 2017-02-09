@@ -88,30 +88,7 @@
 							</p>
 						</div>
 						<!-- 统计内容  -->
-						<div class="pageFormContent" layoutH="80" style="margin-right:230px">
-							<h1>商户&nbsp;&nbsp;&nbsp;&nbsp;(<a href="javascript:loadMerchantStatus();" style="color:blue;">刷新</a>)</h1>
-							
-							<br/>
-							
-							<div class="unit">
-								<hr>
-							</div>
-							<br/>
-							<div class="unit">
-								<h1>代理商&nbsp;&nbsp;&nbsp;&nbsp;(<a href="javascript:loadAgentStatus();" style="color:blue;">刷新</a>)</h1>
-								<br/>
-							</div>
 						
-							<div class="unit">
-								<hr>
-							</div>
-							<br/>
-							
-							<div class="unit">
-								<h1>变更申请&nbsp;&nbsp;&nbsp;&nbsp;(<a href="javascript:loadChangeInfoStatus();" style="color:blue;">刷新</a>)</h1>
-								<br/>
-							</div>
-						</div>
 					</div>
 				</div>
 			</div>

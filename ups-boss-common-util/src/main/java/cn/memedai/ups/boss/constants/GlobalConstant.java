@@ -19,5 +19,14 @@ public class GlobalConstant {
 	 * 当前登录人数
 	 */
 	public static int CURRENT_LOGIN_COUNT = 0;
+	/**
+	 * 超级管理员roleID
+	 */
+	public static final String ADMON_ROLE_ID = "1";
+	
+	/**
+	 * 超级管理员operatorID
+	 */
+	public static final long ADMON_OPERATOR_ID = 1L;
 	
 }
