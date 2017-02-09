@@ -13,7 +13,18 @@
 					ups流水号：<input type="text" name="upsTransNum" value="${paramMap.upsTransNum}" size="15" alt="精确查询"  />
 				</td>
 				<td>
-					商户号：<input type="text" name="merchantCode" value="${paramMap.merchantCode}" size="15" alt="精确查询"  />
+					商户号：
+					<select name="merchantCode">
+						<option value="">-请选择-</option>
+						<option value="0000" <c:if test="${paramMap.merchantCode ne null and paramMap.merchantCode eq '0000'}">selected="selected"</c:if>>么么贷公众号</option>
+						<option value="0001" <c:if test="${paramMap.merchantCode ne null and paramMap.merchantCode eq '0001'}">selected="selected"</c:if>>遛米</option>
+						<option value="0002" <c:if test="${paramMap.merchantCode ne null and paramMap.merchantCode eq '0002'}">selected="selected"</c:if>>分期网关</option>
+						<option value="0003" <c:if test="${paramMap.merchantCode ne null and paramMap.merchantCode eq '0003'}">selected="selected"</c:if>>么理财</option>
+						<option value="0004" <c:if test="${paramMap.merchantCode ne null and paramMap.merchantCode eq '0004'}">selected="selected"</c:if>>么么钱包</option>
+						<option value="0005" <c:if test="${paramMap.merchantCode ne null and paramMap.merchantCode eq '0005'}">selected="selected"</c:if>>商户商品管理系统</option>
+						<option value="0006" <c:if test="${paramMap.merchantCode ne null and paramMap.merchantCode eq '0006'}">selected="selected"</c:if>>现金贷</option>
+						<option value="0007" <c:if test="${paramMap.merchantCode ne null and paramMap.merchantCode eq '0007'}">selected="selected"</c:if>>统一打款系统</option>
+					
 				</td>
 				<td>
 					商户流水号：<input type="text" name="merchantTradeCode" value="${paramMap.merchantTradeCode}" size="15" alt="精确查询"  />
@@ -67,6 +78,7 @@
 					<div class="subBar">
 						<ul>
 							<li><div class="buttonActive"><div class="buttonContent"><button type="submit">查询</button></div></div></li>
+							<li><div class="buttonActive"><div class="buttonContent"><button type="button"  onclick="clearFormOperatorLogList()">清空条件</button></div></div></li>
 						</ul>
 					</div>
 				</td>
@@ -109,7 +121,16 @@
 				    	<c:if test="${orderDO.status eq '50'}">交易失败</c:if>
 				    	<c:if test="${orderDO.status eq '60'}">交易异常</c:if>
 					</td>
-				    <td>${orderDO.merchantCode}</td>
+				    <td>
+				    	<c:if test="${orderDO.merchantCode eq '0000'}">么么贷公众号</c:if>
+				    	<c:if test="${orderDO.merchantCode eq '0001'}">遛米</c:if>
+				    	<c:if test="${orderDO.merchantCode eq '0002'}">分期网关</c:if>
+				    	<c:if test="${orderDO.merchantCode eq '0003'}">么理财</c:if>
+				    	<c:if test="${orderDO.merchantCode eq '0004'}">么么钱包</c:if>
+				    	<c:if test="${orderDO.merchantCode eq '0005'}">商户商品管理系统</c:if>
+				    	<c:if test="${orderDO.merchantCode eq '0006'}">现金贷</c:if>
+				    	<c:if test="${orderDO.merchantCode eq '0007'}">统一打款系统</c:if>
+				    </td>
 				    <td>${orderDO.merchantTradeCode}</td>
 				    <td>${orderDO.upsTransNum}</td>
 				    <td>${orderDO.respCode}</td>
