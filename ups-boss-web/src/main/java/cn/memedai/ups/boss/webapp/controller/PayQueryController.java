@@ -17,8 +17,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import cn.memedai.ups.boss.dal.model.pay.OrderDO;
-import cn.memedai.ups.boss.service.pay.BankLimitService;
 import cn.memedai.ups.boss.service.pay.OrderService;
+import cn.memedai.ups.boss.service.permission.annotation.Permission;
+import cn.memedai.ups.boss.utils.DateUtils;
 import cn.memedai.ups.boss.utils.StrUtil;
 import cn.memedai.ups.boss.webapp.base.PermissionBase;
 
@@ -131,11 +132,45 @@ public class PayQueryController extends PermissionBase {
 	 * @param request
 	 * @return
 	 */
+	@Permission("pay:order:edit")
 	@RequestMapping("/editOrderUI")
 	@ResponseBody
 	public Object editOrderUI(HttpServletRequest request) {
-		String orderId = request.getParameter("orderId");
-		return null;
+		try {
+			String orderId = request.getParameter("orderId");
+			OrderDO orderDO = orderService.selectByPrimaryKey(Long.parseLong(orderId));
+			ModelAndView mov = new ModelAndView("/pay/order/orderEdit");
+			mov.addObject("orderDO", orderDO);
+			return mov;
+		} catch (Exception e) {
+			log.error("== editPmsActionUI exception:", e);
+			return operateError("获取数据失败");
+		}
+	}
+	
+	/**
+	 * 确认修改订单
+	 * @param request
+	 * @return
+	 */
+	@Permission("pay:order:edit")
+	@RequestMapping("/editOrder")
+	@ResponseBody
+	public Object editOrder(HttpServletRequest request) {
+		try {
+			OrderDO orderDO = new OrderDO();
+			Long orderId = getLong("orderId");
+			String status = getString("status");
+			orderDO.setOrderId(orderId);
+			orderDO.setStatus(status);
+			orderDO.setLastUpdateTime(DateUtils.getCurrDateTime());
+			orderService.updateByPrimaryKeySelective(orderDO);
+			super.logEdit("修改订单[" + orderId + "]"+orderDO.toString());
+			return operateSuccess();
+		} catch (Exception e) {
+			log.error("== editOrder exception:", e);
+			return operateError("获取数据失败");
+		}
 	}
 
 }

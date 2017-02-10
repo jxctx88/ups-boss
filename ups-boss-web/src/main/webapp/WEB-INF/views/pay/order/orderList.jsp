@@ -77,9 +77,7 @@
 				<td>
 					<div class="subBar">
 						<ul>
-							<z:permission value="pms:action:edit">
 							<li><div class="buttonActive"><div class="buttonContent"><button type="submit">查询</button></div></div></li>
-							</z:permission>
 							<li><div class="buttonActive"><div class="buttonContent"><button type="button"  onclick="clearFormOperatorLogList()">清空条件</button></div></div></li>
 						</ul>
 					</div>
@@ -98,6 +96,7 @@
 				<th>商户号</th>
 				<th>商户流水号</th>
 				<th>ups流水号</th>
+				<th>交易金额(分)</th>
 				<th>银行返回码</th>
 				<th>银行返回信息</th>
 				<th>支付通道</th>
@@ -136,6 +135,7 @@
 				    </td>
 				    <td>${orderDO.merchantTradeCode}</td>
 				    <td>${orderDO.upsTransNum}</td>
+				    <td>${orderDO.tradeAmount}</td>
 				    <td>${orderDO.respCode}</td>
 				    <td>${orderDO.codeMsg}</td>
 					<td>
@@ -157,7 +157,7 @@
 					<td>${orderDO.lastUpdateTime}</td>
 					<td>
 						<z:permission value="pay:order:edit">
-							[<a href="${rc.contextPath}/pay/order/editOrderUI?orderId=${orderDO.orderId}" title="修改订单" target="dialog" width="550" height="300" rel="input"  style="color:blue">修改</a>]
+							[<a href="${rc.contextPath}/pay/order/editOrderUI?orderId=${orderDO.orderId}" title="修改订单" target="dialog" width="850" height="500" rel="input"  style="color:blue">修改</a>]
 						</z:permission>
 					</td>
 				</tr>

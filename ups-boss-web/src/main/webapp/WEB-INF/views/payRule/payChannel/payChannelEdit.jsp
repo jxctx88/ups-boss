@@ -19,7 +19,6 @@
 			<p style="width:99%">
 				<label>支付通道：</label>
 				<select name="channelId">
-					<option value="" >-请选择-</option>
 					<option value="000" <c:if test="${bankLimitDO.channelId ne null and bankLimitDO.channelId eq '000'}">selected="selected"</c:if>>快钱</option>
 					<option value="001" <c:if test="${bankLimitDO.channelId ne null and bankLimitDO.channelId eq '001'}">selected="selected"</c:if>>联动优势</option>
 					<option value="002" <c:if test="${bankLimitDO.channelId ne null and bankLimitDO.channelId eq '002'}">selected="selected"</c:if>>渤海</option>

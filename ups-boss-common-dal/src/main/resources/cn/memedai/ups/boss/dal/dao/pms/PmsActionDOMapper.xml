@@ -272,5 +272,6 @@
         	AND A.MENUID = #{menuid,jdbcType=BIGINT}
       	</if>
 	</where>
+      	order by A.ID desc
   </select>
 </mapper>

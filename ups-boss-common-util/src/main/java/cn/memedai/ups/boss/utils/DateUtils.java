@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 
 /**
@@ -52,6 +53,17 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 	public static final SimpleDateFormat HMS_FORMAT = new SimpleDateFormat("HH:mm:ss");
 	public static final SimpleDateFormat formatTimestamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
+	
+	/**
+	 * 取得当前日期时间。
+	 * 
+	 * @return 当前日期时间，格式：yyyyMMddHHmmss
+	 */
+	public static String getCurrDateTime() {
+		SimpleDateFormat df = new SimpleDateFormat("yyyyMMddHHmmss");
+		Calendar cal = Calendar.getInstance(TimeZone.getDefault());
+		return df.format(cal.getTime());
+	}
 	/**
 	 * 根据日期格式字符串解析日期字符串
 	 * 

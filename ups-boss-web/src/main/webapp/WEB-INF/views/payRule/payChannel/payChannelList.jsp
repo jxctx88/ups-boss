@@ -54,8 +54,8 @@
 <div class="pageContent">
 	<div class="panelBar">
 		<ul class="toolBar">
-			<z:permission value="pms:operator:add">
-				<li><a class="add" href="${rc.contextPath}/payChannel/addPayChannelUI" target="dialog" rel="input" title="添加支付渠道"><span>添加支付渠道</span></a></li>
+			<z:permission value="pay:payChannel:add">
+				<li><a class="add" href="${rc.contextPath}/pay/payChannel/addPayChannelUI" target="dialog" rel="input" title="添加支付渠道"><span>添加支付渠道</span></a></li>
 			</z:permission>
 		</ul>
 	</div>
@@ -124,19 +124,17 @@
 				    	<fmt:formatDate value="${bankLimitDO.lastUpdateTime}" pattern="yyyy-MM-dd HH:mm:ss"/>
 				    </td>
 					<td>
-						<c:if test="${PmsOperatorDO.type eq OperatorTypeEnum.USER.value }">
-							<z:permission value="pms:operator:edit">
-								&nbsp;[<a href="${rc.contextPath}/payChannel/editPayChannelUI?id=${bankLimitDO.id}" title="修改" target="dialog" rel="operatorUpdate" style="color:blue">修改</a>]
-							</z:permission>
-							<z:permission value="pms:operator:changestatus">
-								<c:if test="${PmsOperatorDO.type eq OperatorTypeEnum.USER.value && bankLimitDO.status=='20'}">
-								&nbsp;[<a href="${rc.contextPath}/payChannel/changePayChannelStatus?id=${bankLimitDO.id}" title="启用" target="ajaxTodo" style="color:blue">启用</a>]
-								</c:if>
-								<c:if test="${PmsOperatorDO.type eq OperatorTypeEnum.USER.value && bankLimitDO.status=='10'}">
-								&nbsp;[<a href="${rc.contextPath}/payChannel/changePayChannelStatus?id=${bankLimitDO.id}" title="停用" target="ajaxTodo" style="color:blue">停用</a>]
-								</c:if>
-							</z:permission>
-						</c:if>
+						<z:permission value="pay:payChannel:edit">
+							&nbsp;[<a href="${rc.contextPath}/payChannel/editPayChannelUI?id=${bankLimitDO.id}" title="修改" target="dialog" rel="operatorUpdate" style="color:blue">修改</a>]
+						</z:permission>
+						<z:permission value="pay:payChannel:changestatus">
+							<c:if test="${PmsOperatorDO.type eq OperatorTypeEnum.USER.value && bankLimitDO.status=='20'}">
+							&nbsp;[<a href="${rc.contextPath}/payChannel/changePayChannelStatus?id=${bankLimitDO.id}" title="启用" target="ajaxTodo" style="color:blue">启用</a>]
+							</c:if>
+							<c:if test="${PmsOperatorDO.type eq OperatorTypeEnum.USER.value && bankLimitDO.status=='10'}">
+							&nbsp;[<a href="${rc.contextPath}/payChannel/changePayChannelStatus?id=${bankLimitDO.id}" title="停用" target="ajaxTodo" style="color:blue">停用</a>]
+							</c:if>
+						</z:permission>
 					</td>
 				</tr>
 			</c:forEach>

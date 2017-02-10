@@ -93,4 +93,19 @@ public class OrderServiceImpl implements OrderService {
 		return new PageInfo<OrderDO>(list);
 	}
 
+	@Override
+	public OrderDO selectByPrimaryKey(Long orderId) {
+		return orderDOMapper.selectByPrimaryKey(orderId);
+	}
+
+	@Override
+	public int insertSelective(OrderDO record) {
+		return orderDOMapper.insertSelective(record);
+	}
+
+	@Override
+	public int updateByPrimaryKeySelective(OrderDO record) {
+		return orderDOMapper.updateByPrimaryKeySelective(record);
+	}
+
 }
