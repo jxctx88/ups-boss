@@ -20,6 +20,9 @@ import cn.memedai.ups.boss.dal.model.pay.BankLimitDO;
 import cn.memedai.ups.boss.dal.model.pay.BankLimitDOExample;
 import cn.memedai.ups.boss.service.pay.BankLimitService;
 import cn.memedai.ups.boss.webapp.base.PermissionBase;
+import cn.memedai.ups.facade.model.ShortcutDynNumBean;
+import cn.memedai.ups.facade.model.ShortcutDynNumResponse;
+import cn.memedai.ups.facade.service.IncomeServiceFacade;
 
 import com.github.pagehelper.PageInfo;
 /**
@@ -36,7 +39,9 @@ public class PayChannelController extends PermissionBase {
 	@Autowired
 	private BankLimitService bankLimitService;
 	
-
+	@Autowired
+	IncomeServiceFacade incomeServiceFacade;
+	
 	/**
 	 * 进入支付渠道页面.
 	 * @return
@@ -44,6 +49,11 @@ public class PayChannelController extends PermissionBase {
 	@RequestMapping("/listPayChannel")
 	@ResponseBody
 	public Object listPayChannel(HttpServletRequest request) {
+		log.info("_________________开始调用ups__________________");
+		ShortcutDynNumBean shortcutDynNumBean = new ShortcutDynNumBean();
+		shortcutDynNumBean.setBankAccount("232323232");
+		ShortcutDynNumResponse response = incomeServiceFacade.shortcutDynNum(shortcutDynNumBean);
+		log.info("__________调用ups返回结果为：{}",response.toString());
 		ModelAndView mov = new ModelAndView("/payRule/payChannel/payChannelList");
 		
 		Map<String, Object> paramMap = new HashMap<String, Object>(); // 业务条件查询参数

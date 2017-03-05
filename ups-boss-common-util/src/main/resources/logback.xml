@@ -6,7 +6,7 @@
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
             <!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符 -->
-            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n</pattern>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level [%X{THREAD_ID}] %logger{50} - %msg%n</pattern>
         </encoder>
     </appender>
     
@@ -194,7 +194,7 @@
         <appender-ref ref="STDOUT"/>
     </logger> -->
     
-   	<logger name="com.ibatis" level="DEBUG">
+   <!-- 	<logger name="com.ibatis" level="DEBUG">
    		<appender-ref ref="STDOUT"/>
    	</logger>  
 	<logger name="com.ibatis.common.jdbc.SimpleDataSource" level="DEBUG">
@@ -212,9 +212,14 @@
 	<logger name="java.sql.Statement" level="DEBUG" >
 		<appender-ref ref="STDOUT"/>
 	</logger>  
+	
 	<logger name="java.sql.PreparedStatement" level="DEBUG" >
 		<appender-ref ref="STDOUT"/>
 	</logger> 
+	
+	<logger name="cn.memedai.framework.dubbo.ext.filter" level="DEBUG" >
+		<appender-ref ref="STDOUT"/>
+	</logger> --> 
     
     <!-- 日志输出级别 -->
     <root level="DEBUG">

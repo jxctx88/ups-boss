@@ -115,7 +115,6 @@ public class PayBatchOutcomController extends PermissionBase {
 			batchOutcomeDO.setStatus(status);
 			batchOutcomeDO.setLastUpdateTime(new Date());
 			batchOutcomeService.updateByPrimaryKeySelective(batchOutcomeDO);
-			//orderService.updateByPrimaryKeySelective(orderDO);
 			super.logEdit("修改订单[" + id + "]"+batchOutcomeDO.toString());
 			return operateSuccess();
 		} catch (Exception e) {

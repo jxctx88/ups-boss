@@ -1,0 +1,1 @@
+trace=cn.memedai.framework.dubbo.ext.filter.TraceFilter

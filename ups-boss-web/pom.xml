@@ -13,6 +13,11 @@
     <packaging>war</packaging>
     
     <dependencies>
+    	<dependency>
+		  <groupId>cn.memedai</groupId>
+		  <artifactId>ups-facade</artifactId>
+		  <version>2.0-SNAPSHOT</version>
+		</dependency>
         <dependency>
 			<groupId>cn.memedai</groupId>
 			<artifactId>ups-boss-common-config</artifactId>

@@ -18,12 +18,15 @@ import javax.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import net.sf.json.JSONObject;
 
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.MDC;
 import org.springframework.stereotype.Component;
 
 import com.google.common.base.Splitter;
 
 import cn.memedai.ups.boss.constants.PermissionConstant;
 import cn.memedai.ups.boss.service.context.ThreadLocalContext;
+import cn.memedai.ups.boss.utils.StrUtil;
 
 
 /**
@@ -87,7 +90,11 @@ public class CustomFilter implements Filter {
 		HttpServletResponse response = (HttpServletResponse) resp;
 		String uri = request.getServletPath(); // 请求路径
 		//log.info("=== uri={}",uri);
-
+		//添加TRACE_ID
+		if(StringUtils.isBlank(MDC.get("THREAD_ID"))){
+			MDC.put("THREAD_ID", StrUtil.get32UUID());
+		}
+		
 		try {
 			// 静态资源不处理
 			if (uri.startsWith("/statics") || isStatis(uri)) {
