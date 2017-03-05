@@ -29,9 +29,9 @@
 	<!-- 该变量请配置在tomcat的 catalina.properties 中 -->
 	<dubbo:protocol name="dubbo" port="20880" />
 
-	<dubbo:consumer filter="trace" ></dubbo:consumer>
+	<dubbo:consumer filter="flower" ></dubbo:consumer>
 
 	<!-- 账务capital服务,提供用户是否已经结清查询 -->
-	<dubbo:reference filter="trace" id="incomeServiceFacade" url="dubbo://99.48.66.20:20880"  interface="cn.memedai.ups.facade.service.IncomeServiceFacade" version="1.0" />
+	<dubbo:reference filter="flower" id="incomeServiceFacade" url="dubbo://99.48.56.35:20880"  interface="cn.memedai.ups.facade.service.IncomeServiceFacade" version="1.0" />
 
 </beans>
