@@ -336,7 +336,7 @@ public class PmsPermissionController extends PermissionBase {
 			String roleName = getString("roleName");//角色名称（模糊查询）
 			PmsRoleDOExample example = new PmsRoleDOExample();
 			cn.memedai.ups.boss.dal.model.pms.PmsRoleDOExample.Criteria criteria = example.createCriteria();
-			if(StringUtils.isNoneBlank(roleName)){
+			if(StringUtils.isNotBlank(roleName)){
 				criteria.andRolenameLike(roleName);
 			}
 			example.setOrderByClause(" id desc");
