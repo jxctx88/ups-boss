@@ -25,13 +25,13 @@
 		</property>
 	</bean> -->
 	<dubbo:application name="ups-boss" />
-	<dubbo:registry id="dubboRegistry" protocol="zookeeper" address="99.48.66.13:2181" />
+	<dubbo:registry id="dubboRegistry" protocol="zookeeper" address="xx.xx.xx.xx:2181" />
 	<!-- 该变量请配置在tomcat的 catalina.properties 中 -->
 	<dubbo:protocol name="dubbo" port="20880" />
 
 	<dubbo:consumer filter="flower" ></dubbo:consumer>
 
 	<!-- 账务capital服务,提供用户是否已经结清查询 -->
-	<dubbo:reference filter="flower" id="incomeServiceFacade" url="dubbo://99.48.56.35:20880"  interface="cn.memedai.ups.facade.service.IncomeServiceFacade" version="1.0" />
+	<dubbo:reference filter="flower" id="incomeServiceFacade" url="dubbo://xx.xx.xx.xx:20880"  interface="cn.memedai.ups.facade.service.IncomeServiceFacade" version="1.0" />
 
 </beans>
